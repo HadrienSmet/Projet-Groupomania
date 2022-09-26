@@ -1,0 +1,19 @@
+import { useContext } from "react";
+import { createContext, useState } from "react";
+
+const LoginContext = createContext();
+
+//Displays the right navBar depending on if the user is logged in or not.
+const LoginProvider = ({ children }) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    return (
+        <LoginContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+            { children }
+        </LoginContext.Provider>
+    );
+};
+
+// Hook allowing to the children to change the context
+export const useLogin = () => useContext(LoginContext)
+
+export default LoginProvider;

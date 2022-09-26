@@ -1,0 +1,10 @@
+header {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: lighten($primary-color, 47);
+    img {
+        width: 300px;
+    }
+}

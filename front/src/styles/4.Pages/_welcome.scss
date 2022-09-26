@@ -1,0 +1,37 @@
+.welcome-component {
+    padding: 25px 0;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    gap: 60px;
+    align-items: center;
+    // .polygon-container {
+        
+    // }
+    .polygon {
+        clip-path: ellipse(50% 50% at 50% 50%);
+        background: rgb(255,95,61);
+        background: linear-gradient(122deg, rgba(255,95,61,1) 0%, rgba(253,45,1,1) 76%);
+        height: 350px;
+        width: 550px;
+        position: absolute;
+        z-index: 0;
+        left: 54%;
+        top: 145px;   
+    }
+    .brief-intro {
+        z-index: 1;
+    }
+    h1 {
+        color: $clr-1;
+        width: 430px;
+        z-index: 1;
+        margin-bottom: 10px;
+    }
+    p {
+        color: $clr-1;
+        z-index: 1;
+        margin-top: 5px;
+        font-size: 16px;
+    }
+}

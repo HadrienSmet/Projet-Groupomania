@@ -1,0 +1,11 @@
+.home-page__component {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 35px 45px;
+    h1, p {
+        color: $primary-color;
+    }
+    // color: $clr-1;
+    // background-color: lighten($primary-color, 8);
+}
