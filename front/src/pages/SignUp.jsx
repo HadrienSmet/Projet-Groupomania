@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useLogin } from '../utils/context/LoginProvider';
-import illuSignUp from '../assets/images/sign-up-illu.png'
+import illuSignUp from '../assets/images/sign-up-illu.png';
 
 const SignUp = () => {
     let navigate = useNavigate();
@@ -35,6 +35,28 @@ const SignUp = () => {
         })         
     }
 
+    //Creates an animation when the user clicks on the button
+    //@Params { Type: Object, Type: String, Type: Number, Type: Number }
+    //The first param is the data provided by the event
+    //The second params defines wich container is going to be the father for the animation
+    //The two last params are teching us the position of the father in the DOM
+    const clickAnimation = (e, tag, elemX, elemY) => {
+        console.log(e);
+        let container = document.querySelector(tag)
+            let x = e.clientX;
+            let y = e.clientY;
+    
+            let ripples = document.createElement('span');
+            ripples.classList.add('ripples');
+            ripples.style.left = x - elemX + "px";
+            ripples.style.top = y - elemY + "px";
+            container.appendChild(ripples);
+    
+            setTimeout(() => {
+                ripples.remove();
+            }, 1000);
+        };
+
     return (
         <section className='signup-section'>
             <div className="signup-component start-form">
@@ -48,7 +70,9 @@ const SignUp = () => {
                         <input type="password" id="password" required="required" { ...register("password", { required: "Veuillez définir votre mot de passe" }) } />
                         <label htmlFor="password">Mot de passe</label>
                     </div>
-                    <button>S'inscrire</button>
+                    <div className="click-anim-container">
+                        <button onClick={(e) => clickAnimation(e, ".click-anim-container", 255, 367)}>S'inscrire</button>
+                    </div>
                     <span className="alert-msg"></span>
                 </form>
             </div>

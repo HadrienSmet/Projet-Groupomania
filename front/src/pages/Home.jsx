@@ -1,7 +1,16 @@
+import { useEffect } from "react";
+// import { useEffect } from "react";
 import PostForm from "../components/PostForm";
 import PostsContainer from "../components/PostsContainer";
+import { useLogin } from "../utils/context/LoginProvider";
 
 const Home = () => {
+    const { setIsLoggedIn } = useLogin();
+
+    useEffect(() => {
+        setIsLoggedIn(true)
+    });
+
     return (
         <main>
             <div className="home-page__component">

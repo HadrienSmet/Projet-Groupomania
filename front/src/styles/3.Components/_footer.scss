@@ -1,6 +1,4 @@
 footer {
-    // position: relative;
-    // bottom: 0px;
     background-color: $tertiary-color;
     color: $clr-1;
     display: flex;
@@ -8,17 +6,13 @@ footer {
     text-align: center;
     padding: 20px 40px;
     .footer-contact {
-        display: flex;
+        @include rowCenter;
         gap: 20px;
-        align-items: center;
-        // flex-direction: column;
-        // justify-content: start;
         h3 {
             margin-right: 20px;
         }
         p {
             cursor: pointer;
-            // margin-top: 35px;
         }
     }
     img {

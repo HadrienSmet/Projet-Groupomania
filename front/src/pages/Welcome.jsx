@@ -1,6 +1,13 @@
 import illu from "../assets/images/img-socialnetwork-welcom-removebg-preview.png";
+import { useLogin } from "../utils/context/LoginProvider";
+import { useEffect } from "react";
 
 const Welcome = () => {
+    const { setIsLoggedIn } = useLogin();
+
+    useEffect(() => {
+        setIsLoggedIn(false)
+    });
 
     return (
         <div className="welcome-component">

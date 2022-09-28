@@ -1,9 +1,8 @@
 header {
-    display: flex;
-    text-align: center;
+    @include rowCenter;
     justify-content: space-between;
+    text-align: center;
     padding: 15px;
-    background-color: lighten($primary-color, 47);
     img {
         width: 300px;
     }

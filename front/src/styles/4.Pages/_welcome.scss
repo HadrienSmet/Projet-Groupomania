@@ -1,35 +1,44 @@
 .welcome-component {
-    padding: 25px 0;
     display: flex;
     flex-direction: row-reverse;
-    justify-content: space-around;
-    gap: 60px;
+    justify-content: space-between;
+    padding: 25px 0;
     align-items: center;
-    // .polygon-container {
-        
-    // }
-    .polygon {
+    background-color: lighten($primary-color, 47);
+    .polygon-container {
         clip-path: ellipse(50% 50% at 50% 50%);
         background: rgb(255,95,61);
         background: linear-gradient(122deg, rgba(255,95,61,1) 0%, rgba(253,45,1,1) 76%);
-        height: 350px;
-        width: 550px;
+        height: 365px;
+        width: 580px;
         position: absolute;
         z-index: 0;
         left: 54%;
-        top: 145px;   
+        top: 137.5px; 
+    }
+    .polygon {
+        clip-path: ellipse(50% 50% at 50% 50%);
+        background-color: lighten($primary-color, 47);
+        height: 350px;
+        width: 550px;
+        position: absolute;
+        z-index: 1;
+        left: 10px;
+        top: 2px;
     }
     .brief-intro {
+        position: relative;
+        left: -150px;
         z-index: 1;
     }
     h1 {
-        color: $clr-1;
+        color: $primary-color;
         width: 430px;
         z-index: 1;
         margin-bottom: 10px;
     }
     p {
-        color: $clr-1;
+        color: $primary-color;
         z-index: 1;
         margin-top: 5px;
         font-size: 16px;

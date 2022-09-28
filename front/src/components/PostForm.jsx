@@ -11,7 +11,7 @@ const PostForm = () => {
                 <input type="text" id="userPost" />
                 <span className="pseudo-label">Exprimez-vous</span>
             </div>
-            <input type="file" id="userFile" multiple="false" accept="image/*" onChange={(e) => console.log(e)} />
+            <input type="file" id="userFile" accept="image/*" onChange={(e) => console.log(e)} />
         </form>
     );
 };
