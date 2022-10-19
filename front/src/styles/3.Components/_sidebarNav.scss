@@ -1,0 +1,62 @@
+
+.side-bar {
+    @media screen and (min-width: 1024px) {
+        display: none;
+    }
+    // display: block;
+    position: absolute;
+    width: 230px;
+    height: 130px;
+    padding: 20px 0;
+    border-radius: 15px;
+    background: $primary-color;
+    top: 20px;
+    right: -200px;
+    transition: 0.5s ease-out;
+    z-index: 4;
+    .toggle-btn {
+        position: absolute;
+        top: 10px;
+        right: 240px;
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+        span {
+            width: 50px;
+            height: 7px;
+            border-radius: 5px;
+            background: $tertiary-color;
+            display: block;
+            margin-top: 6px;
+            transition: 0.3s ease;
+        }
+    }
+    ul {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        gap: 10px;
+        li > a {
+            text-transform: uppercase;
+            height: 30px;
+            color: $clr-1;
+        }
+    }
+}
+.side-bar.active {
+    right: 10px;
+}
+.active span {
+    position: absolute;
+    background-color: $primary-color !important;
+    &:nth-child(1) {
+        transform: rotate(45deg);
+    }
+    &:nth-child(2) {
+        opacity: 0;
+    }
+    &:nth-child(3) {
+        transform: rotate(-45deg);
+    }
+}

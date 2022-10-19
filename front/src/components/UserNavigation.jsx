@@ -32,11 +32,11 @@ const UserNavigation = () => {
                     onMouseLeave={(e) => handlerDownBgAnimation(e)}
                 >
                     <span className="animated-bg" id='lastChild' ></span>
-                    <Link to="/home" 
+                    <a href="#main-title" 
                         className='lastChild' 
                         onMouseEnter={(e) => handlerUpBgAnimation(e)} 
                         onMouseLeave={(e) => handlerDownBgAnimation(e)}
-                    >Accueil</Link>
+                    >Accueil</a>
                 </li>
                 <div className="animation start-home"></div>
             </ul>

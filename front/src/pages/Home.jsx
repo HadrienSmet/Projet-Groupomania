@@ -11,7 +11,7 @@ import FormDialog from "../components/ProfileHandler";
 const Home = () => {
     const dispatch = useDispatch();
     const postsData = useSelector((state) => state.postsWarehouse.posts);
-    const isComplete = useSelector((state) => state.profileCompletion.isComplete)
+    const isComplete = useSelector((state) => state.profileCompletion.isComplete);
     let { token } = getJwtToken();
 
     useEffect(() => {
@@ -33,11 +33,12 @@ const Home = () => {
             // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     
+  
 
     return (
         <main>
             <div className="home-page__component">
-                <h1>Suivez les dernières activités de vos collègues</h1>
+                <h1 id='main-title'>Suivez les dernières activités de vos collègues</h1>
                 <FormDialog profileComplete={ isComplete } />
                 { isComplete 
                 ? 

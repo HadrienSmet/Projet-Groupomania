@@ -1,8 +1,13 @@
 header {
+    position: fixed;
     @include rowCenter;
     justify-content: space-between;
     text-align: center;
     padding: 15px;
+    background-color: $clr-1;
+    z-index: 20;
+    width: 100%;
+    transition: 0.5s ease-in-out;
     img {
         width: 300px;
     }

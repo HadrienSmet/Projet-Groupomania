@@ -1,7 +1,14 @@
 .modal {
+    @media screen and (max-width: 767px) {
+        position: absolute;
+    }
     &__button {
+        @media screen and (max-width: 767px) {
+            position: absolute;
+        }
         border: 1px solid $primary-color !important;
         color: $primary-color !important;
+        z-index: 2;
     }
     &__profile-button {
         &__img-container {

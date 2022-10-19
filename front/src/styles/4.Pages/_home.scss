@@ -1,12 +1,17 @@
 .home-page {
     &__component {
+        position: relative;
         display: flex;
         flex-direction: column;
         gap: 20px;
         padding: 45px;
-        // background-color: $secondary-color;
+        padding-top: 120px;
         h1 {
+            @media screen and (max-width: 767px) {
+                margin-left: 180px;
+            }
             color: $primary-color;
+            margin-bottom: 30px;
         }
     }
     &__post-container {

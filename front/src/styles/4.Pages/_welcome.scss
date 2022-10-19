@@ -1,46 +1,72 @@
-.welcome-component {
+.welcome {
+    @media screen and (min-width: 1025px) {
+        flex-direction: row-reverse;
+        justify-content: space-around;
+        height: 650px;
+        padding: 25px 0;
+    }
+    @media screen and (max-width: 1024px) {
+        gap: 30px;
+        padding: 55px 0;
+        flex-direction: column;
+    }
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    padding: 25px 0;
     align-items: center;
     background-color: lighten($primary-color, 47);
-    .polygon-container {
-        clip-path: ellipse(50% 50% at 50% 50%);
-        background: rgb(255,95,61);
-        background: linear-gradient(122deg, rgba(255,95,61,1) 0%, rgba(253,45,1,1) 76%);
-        height: 365px;
-        width: 580px;
-        position: absolute;
-        z-index: 0;
-        left: 54%;
-        top: 137.5px; 
-    }
-    .polygon {
-        clip-path: ellipse(50% 50% at 50% 50%);
-        background-color: lighten($primary-color, 47);
-        height: 350px;
-        width: 550px;
-        position: absolute;
-        z-index: 1;
-        left: 10px;
-        top: 2px;
-    }
-    .brief-intro {
+    &__aside-intro {
         position: relative;
-        left: -150px;
-        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        &__polygon-container {
+            @media screen and (min-width: 1025px) {
+                display: block;
+                clip-path: ellipse(50% 50% at 50% 50%);
+                background: rgb(255,95,61);
+                background: linear-gradient(122deg, rgba(255,95,61,1) 0%, rgba(253,45,1,1) 76%);
+                height: 365px;
+                width: 580px;
+                position: absolute;
+                z-index: 0;
+            }
+            display: none;
+        }
+        &__polygon {
+            clip-path: ellipse(50% 50% at 50% 50%);
+            background-color: lighten($primary-color, 47);
+            height: 350px;
+            width: 550px;
+            position: absolute;
+            z-index: 1;
+            left: 10px;
+            top: 2px;
+        }
+        &__brief-intro {
+            position: relative;
+            z-index: 1;   
+        }
+        h1 {
+            @media screen and (min-width: 1025px) {
+                width: 430px;
+            }
+            color: $primary-color;
+            z-index: 10;
+            margin-bottom: 10px;
+        }
+        p {
+            color: $primary-color;
+            z-index: 10;
+            margin-top: 15px;
+            font-size: 16px;
+        }
     }
-    h1 {
-        color: $primary-color;
-        width: 430px;
-        z-index: 1;
-        margin-bottom: 10px;
-    }
-    p {
-        color: $primary-color;
-        z-index: 1;
-        margin-top: 5px;
-        font-size: 16px;
+    img {
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+            width: 80%;
+        }
+        @media screen and (max-width: 767px) {
+            width: 100%;
+        }
     }
 }

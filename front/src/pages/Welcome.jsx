@@ -11,14 +11,16 @@ const Welcome = () => {
     }, [dispatch]);
 
     return (
-        <div className="welcome-component">
-            <div className="polygon-container">
-                <div className="polygon"></div>
+        <div className="welcome">
+            <div className="welcome__aside-intro">
+                <div className="welcome__aside-intro__polygon-container">
+                    <div className="welcome__aside-intro__polygon"></div>
+                </div>
+                <div className="welcome__aside-intro__brief-intro">               
+                    <h1>Bienvenue sur le réseau social de Groupomania.</h1>
+                    <p>Conçu spécialement pour ses chers collaborateurs.</p>
+                </div>
             </div> 
-            <div className="brief-intro">   
-                <h1>Bienvenue sur le réseau social de Groupomania.</h1>
-                <p>Conçu spécialement pour ses chers collaborateurs.</p>
-            </div>
             <img src={ illu } alt="Illustration réseaux sociaux" />
         </div>
     )

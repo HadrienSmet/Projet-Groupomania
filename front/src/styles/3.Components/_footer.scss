@@ -1,10 +1,17 @@
 footer {
+    @media screen and (min-width: 1025px) {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: center;
+        padding: 20px 40px;
+    }
     background-color: $tertiary-color;
     color: $clr-1;
     display: flex;
-    justify-content: space-between;
-    text-align: center;
-    padding: 20px 40px;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 0 30px;
     .footer-contact {
         @include rowCenter;
         gap: 20px;
@@ -18,6 +25,7 @@ footer {
     img {
         position: relative;
         top: 10px;
+        width: 200px;
         height: 50px;
     }
 }
