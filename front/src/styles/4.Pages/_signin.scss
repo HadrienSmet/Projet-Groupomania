@@ -67,10 +67,11 @@
             border-radius: 5px;
             background-color: $secondary-color;
             color: $primary-color;
-            font-size: 25px;
+            font-size: 18px;
             border: 1px solid $clr-1;
             line-height: 45px;
             padding-left: 15px;
+            padding-right: 15px;
             transition: 0.4s ease-in-out;
             &:focus-visible {
                 outline: none;
@@ -87,17 +88,19 @@
         button {
             cursor: pointer;
             position: relative;
+            height: 55px;
             margin-top: 10px;
             line-height: 55px;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 400;
-            font-size: 1.2em;
+            // font-size: 1.2em;
             border: 2px solid $clr-1;
             background-color: $secondary-color;
             color: $clr-1;  
             border-radius: 5px;
             width: 90%;
+            word-break: keep-all;
             &:hover {
                 margin-bottom: 1px;
                 color: $primary-color;

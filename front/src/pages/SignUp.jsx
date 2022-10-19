@@ -1,13 +1,16 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useLogin } from '../utils/context/LoginProvider';
 import illuSignUp from '../assets/images/sign-up-illu.png';
+import { useDispatch } from 'react-redux';
+import { setUserLogged } from '../features/login.slice';
+import { signUpClickAnimation } from '../utils/functions/animations';
+import { setJwtToken } from '../utils/functions/tools';
+// import { toggleCompletion } from '../features/isComplete.slice';
 
 const SignUp = () => {
     let navigate = useNavigate();
-    const { setIsLoggedIn } = useLogin()
-    
+    const dispatch = useDispatch();
     const { register, handleSubmit } = useForm();
 
     //Handles the form's behavior on submit.
@@ -25,7 +28,9 @@ const SignUp = () => {
         })
         .then(res => {
             if (res.status !== 400) {
-                setIsLoggedIn(true);
+                dispatch(setUserLogged(true));
+                // dispatch(toggleCompletion(false));
+                setJwtToken(res.data);
                 navigate("/home");
             }
         })
@@ -34,28 +39,6 @@ const SignUp = () => {
             span.textContent =  error.message;
         })         
     }
-
-    //Creates an animation when the user clicks on the button
-    //@Params { Type: Object, Type: String, Type: Number, Type: Number }
-    //The first param is the data provided by the event
-    //The second params defines wich container is going to be the father for the animation
-    //The two last params are teching us the position of the father in the DOM
-    const clickAnimation = (e, tag, elemX, elemY) => {
-        console.log(e);
-        let container = document.querySelector(tag)
-            let x = e.clientX;
-            let y = e.clientY;
-    
-            let ripples = document.createElement('span');
-            ripples.classList.add('ripples');
-            ripples.style.left = x - elemX + "px";
-            ripples.style.top = y - elemY + "px";
-            container.appendChild(ripples);
-    
-            setTimeout(() => {
-                ripples.remove();
-            }, 1000);
-        };
 
     return (
         <section className='signup-section'>
@@ -71,7 +54,10 @@ const SignUp = () => {
                         <label htmlFor="password">Mot de passe</label>
                     </div>
                     <div className="click-anim-container">
-                        <button onClick={(e) => clickAnimation(e, ".click-anim-container", 255, 367)}>S'inscrire</button>
+                        <button 
+                        onClick={(e) => signUpClickAnimation(e, ".click-anim-container")}
+                        // onClick={(e) => signUpClickAnimation(e, ".click-anim-container", 204, 280)}
+                        >S'inscrire</button>
                     </div>
                     <span className="alert-msg"></span>
                 </form>

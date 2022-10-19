@@ -1,5 +1,5 @@
 import footerLogo from "../assets/images/icon-left-font-monochrome-white-newrszd.png";
-// front\src\assets\images\icon-left-font-monochrome-white.png
+
 const Footer = () => {
     return (
         <footer>

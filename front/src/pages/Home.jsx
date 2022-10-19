@@ -1,24 +1,56 @@
 import { useEffect } from "react";
-// import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import PostForm from "../components/PostForm";
-import PostsContainer from "../components/PostsContainer";
-import { useLogin } from "../utils/context/LoginProvider";
+import Post from "../components/Post";
+import { setUserLogged } from "../features/login.slice";
+import { getPosts } from "../features/posts.slice";
+import { getJwtToken } from "../utils/functions/tools";
+import FormDialog from "../components/ProfileHandler";
 
 const Home = () => {
-    const { setIsLoggedIn } = useLogin();
+    const dispatch = useDispatch();
+    const postsData = useSelector((state) => state.postsWarehouse.posts);
+    const isComplete = useSelector((state) => state.profileCompletion.isComplete)
+    let { token } = getJwtToken();
 
     useEffect(() => {
-        setIsLoggedIn(true)
-    });
+        
+        dispatch(setUserLogged(true))
+        axios({
+            url: "http://localhost:3000/api/posts",
+            method: "get",
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": `bearer ${token}`
+            }
+        })
+            .then(res => {
+                dispatch(getPosts(res.data))
+                console.log(isComplete);
+            })
+            .catch(err => console.log(err));
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    
 
     return (
         <main>
             <div className="home-page__component">
-                <h1>Bienvenue sur le lieu commun du réseau social de Groupomania</h1>
-                <p>Ce lieu reste bien sûr un cadre professionnel mais est mis à votre disposition pour améliorer la vie au sein de notre entreprise!<br />
-                Exprimez-vous, joignez-y des photos ou des images!</p>
-                <PostForm />
-                <PostsContainer />
+                <h1>Suivez les dernières activités de vos collègues</h1>
+                <FormDialog profileComplete={ isComplete } />
+                { isComplete 
+                ? 
+                    <PostForm /> 
+                : 
+                    <h2>Veuillez finaliser votre profile avant de partager avec vos collegues.</h2> }
+                <div className="home-page__post-container">
+                    <ul>
+                        {postsData && postsData.map((post) => (
+                            <li key={ post._id }><Post  data={ post } /></li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         </main>
     )

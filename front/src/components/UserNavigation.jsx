@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-// import { useLogin } from '../utils/context/LoginProvider';
 import { handlerRodAnimation, removeRod, showMeRod, handlerUpBgAnimation, handlerDownBgAnimation } from '../utils/functions/animations';
 
 const UserNavigation = () => {
-    // const { setIsLoggedIn } = useLogin()
-
-
+    //Think it is explicite enough
+    // const ciao = () => {
+    //     localStorage.clear();
+    // }
     return (
         <nav>
             <ul 
@@ -23,7 +23,7 @@ const UserNavigation = () => {
                         className='firstChild' 
                         onMouseEnter={(e) => handlerUpBgAnimation(e)} 
                         onMouseLeave={(e) => handlerDownBgAnimation(e)} 
-                        // onClick={imLeaving()}
+                        // onClick={ ciao() }
                     >Déconnexion</Link>
                 </li>
                 <li 

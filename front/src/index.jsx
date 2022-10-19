@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from "react-redux";
 
 import "./styles/index.scss"
 
@@ -11,14 +12,14 @@ import Welcome from './pages/Welcome';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Home from './pages/Home';
-import LoginProvider from './utils/context/LoginProvider';
+import store from "./app/store"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <Router>
-      <LoginProvider>
+    <Provider store={store}>
+      <Router>
         <Header />
         <Routes>
           <Route path="/" element={<Welcome />} />
@@ -27,8 +28,8 @@ root.render(
           <Route path="/home" element={<Home />} />
         </Routes>
         <Footer />
-      </LoginProvider>
-    </Router>
+      </Router>
+    </Provider>
   </React.StrictMode> 
 );
 

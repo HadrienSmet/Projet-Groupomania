@@ -1,9 +1,24 @@
-.home-page__component {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin: 35px 45px;
-    h1, p {
-        color: $primary-color;
+.home-page {
+    &__component {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 45px;
+        // background-color: $secondary-color;
+        h1 {
+            color: $primary-color;
+        }
+    }
+    &__post-container {
+        ul {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+        li {
+            width: 100%;
+            display: inline-block;
+        }
     }
 }

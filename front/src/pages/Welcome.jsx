@@ -1,13 +1,14 @@
 import illu from "../assets/images/img-socialnetwork-welcom-removebg-preview.png";
-import { useLogin } from "../utils/context/LoginProvider";
 import { useEffect } from "react";
-
+import { useDispatch } from "react-redux";
+import { setUserLogged } from "../features/login.slice";
 const Welcome = () => {
-    const { setIsLoggedIn } = useLogin();
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        setIsLoggedIn(false)
-    });
+        dispatch(setUserLogged(false));
+        localStorage.clear();
+    }, [dispatch]);
 
     return (
         <div className="welcome-component">
