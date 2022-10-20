@@ -1,11 +1,22 @@
 .signup-section {
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 1025px) {
         flex-direction: row;
+        height: calc(100vh - 240px);
+        padding-top: 150px;
+    }
+    @media screen and (max-width: 1024px) {
+        padding: 120px 0 20px;
     }
     display: flex;
     flex-direction: column;
     background-color: lighten($primary-color, 47);
     img {
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+            position: relative;
+            width: 65%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
         @media screen and (max-width:767px) {
             position: relative;
             width: 80%;
@@ -15,9 +26,14 @@
     }
 }
 .signin-section {
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 1025px) {
         flex-direction: row;
         gap: 40px;
+        height: calc(100vh - 240px);
+        padding-top: 150px;
+    }
+    @media screen and (max-width: 1024px) {
+        padding: 120px 0 20px;
     }
     display: flex;
     flex-direction: column;
@@ -26,6 +42,12 @@
 .start-form {
     @media screen and (min-width: 1025px) {
         width: 35%;
+        height: 350px;
+    }
+    @media screen and (min-width: 768px) and (max-width: 1024px) {
+        padding: 60px;
+        height: 315px;
+        
     }
     @include columnCenter;
     width: 70%;
@@ -49,6 +71,14 @@
         text-transform: uppercase;
     }
     form {
+        @media screen and (min-width: 1025px) {
+            width: 70%;
+            gap: 30px;
+        }
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+            gap: 25px;
+            width: 80%;
+        }
         margin: 0 20px;
         position: relative;
         display: grid;
@@ -153,6 +183,12 @@
     animation: animate 1s linear infinite;
 }
 #signin-img {
+    @media screen and (min-width: 768px) and (max-width: 1024px) {
+        position: relative;
+        width: 65%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
     @media screen and (max-width:767px) {
         position: relative;
         width: 80%;

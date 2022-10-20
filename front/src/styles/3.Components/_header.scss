@@ -1,4 +1,7 @@
 header {
+    @media screen and (min-width: 1025px) {
+        width: calc(100% - 30px);
+    }
     position: fixed;
     @include rowCenter;
     justify-content: space-between;
@@ -9,6 +12,17 @@ header {
     width: 100%;
     transition: 0.5s ease-in-out;
     img {
-        width: 300px;
+        @media screen and (min-width: 768px) {
+            width: 300px;
+        }
+        @media screen and (max-width: 767px) {
+            position: relative;
+            width: 200px;
+            top: 3px;
+        }
+        transition: 0.2s;
+    }
+    #header-logo.active {
+        filter: blur(3px);
     }
 }

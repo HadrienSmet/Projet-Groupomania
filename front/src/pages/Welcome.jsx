@@ -11,7 +11,7 @@ const Welcome = () => {
     }, [dispatch]);
 
     return (
-        <div className="welcome">
+        <section className="welcome">
             <div className="welcome__aside-intro">
                 <div className="welcome__aside-intro__polygon-container">
                     <div className="welcome__aside-intro__polygon"></div>
@@ -22,7 +22,7 @@ const Welcome = () => {
                 </div>
             </div> 
             <img src={ illu } alt="Illustration réseaux sociaux" />
-        </div>
+        </section>
     )
 }
 

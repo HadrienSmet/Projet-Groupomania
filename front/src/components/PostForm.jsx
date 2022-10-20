@@ -133,7 +133,7 @@ const PostForm = () => {
                     }} 
                     onBlur={(e) => handleBlur(e)}
                 ></textarea>
-                <span className="pseudo-label">Exprimez-vous</span>
+                <span className="pseudo-label" id="pseudo-span">Exprimez-vous</span>
             </div>
             <div className="last-row">
                 <div className="label-animation-container">

@@ -4,7 +4,13 @@ import { Link } from "react-router-dom";
 const MobileUserNavigation = () => {
     const handleToggle = () => {
         const sideBar = document.querySelector('.side-bar');
+        const main = document.querySelector('main');
+        const logo = document.querySelector("#header-logo");
+        const footer = document.querySelector("footer");
         sideBar.classList.toggle('active')
+        main.classList.toggle('active');
+        logo.classList.toggle('active');
+        footer.classList.toggle('active');
     }
 
     return (

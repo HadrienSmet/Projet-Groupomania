@@ -23,7 +23,7 @@ const Header = () => {
 
     return (
         <header>
-            <img src={ logo } alt="Logo Groupomania" />
+            <img src={ logo } alt="Logo Groupomania" id="header-logo" />
             { loggedData ?
                 <MobileUserNavigation />
             :

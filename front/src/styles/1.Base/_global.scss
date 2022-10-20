@@ -13,6 +13,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
+section,
+main {
+  transition: 0.2s;
+}
+section.active,
+main.active {
+  filter: blur(3px);
+}
 a {
   text-decoration: none;
   // color: $clr-2;

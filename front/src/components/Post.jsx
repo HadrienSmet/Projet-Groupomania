@@ -12,8 +12,10 @@ const Post = (props) => {
     const [text, setText] = useState("");
     const [liked, setLiked] = useState(false);
     const [disliked, setDisliked] = useState(false);
-    const [likes, setLikes] = useState(props.data.likes)
-    const [dislikes, setDislikes] = useState(props.data.dislikes)
+    const [likes, setLikes] = useState(props.data.likes);
+    const [dislikes, setDislikes] = useState(props.data.dislikes);
+    const [usersLiking, setUsersLiking] = useState(props.data.usersLiked);
+    const [usersDisliking, setUsersDisliking] = useState(props.data.usersDisliked);
     const dispatch = useDispatch();
     let { token, userId } = getJwtToken();
 
@@ -84,7 +86,7 @@ const Post = (props) => {
     }
 
     const likesHandler = () => {
-        if (props.data.usersLiked.includes(userId)) {
+        if (usersLiking.includes(userId)) {
             axios({
                 url: `http://localhost:3000/api/posts/${props.data._id}/like`,
                 method: 'post',
@@ -99,9 +101,12 @@ const Post = (props) => {
             .then(() => {
                 setLikes(likes - 1);
                 setLiked(false);
+                setUsersLiking(usersLiking.splice(userId, 1));
+                setUsersLiking(usersLiking.filter(id => id !== userId));
                 console.log(likes);
+                console.log(usersLiking);
             })
-        } else if (!props.data.usersDisliked.includes(userId)) {
+        } else if (!usersDisliking.includes(userId)) {
             axios({
                 url: `http://localhost:3000/api/posts/${props.data._id}/like`,
                 method: 'post',
@@ -114,15 +119,18 @@ const Post = (props) => {
                 }
             })
             .then(() => {
+                
                 setLikes(likes + 1);
                 setLiked(true);
+                setUsersLiking([...usersLiking, userId]);
                 console.log(likes);
+                console.log(usersLiking);
             })
         }
     }
 
     const dislikesHandler = () => {
-        if (props.data.usersDisliked.includes(userId)) {
+        if (usersDisliking.includes(userId)) {
             axios({
                 url: `http://localhost:3000/api/posts/${props.data._id}/like`,
                 method: 'post',
@@ -137,9 +145,11 @@ const Post = (props) => {
             .then(() => {
                 setDislikes(dislikes - 1);
                 setDisliked(false);
+                setUsersDisliking(usersDisliking.filter(id => id !== userId));
                 console.log(dislikes);
+                console.log(usersDisliking);
             })
-        } else if (!props.data.usersLiked.includes(userId)) {
+        } else if (!usersLiking.includes(userId)) {
             axios({
                 url: `http://localhost:3000/api/posts/${props.data._id}/like`,
                 method: 'post',
@@ -154,7 +164,9 @@ const Post = (props) => {
             .then(() => {
                 setDislikes(dislikes + 1);
                 setDisliked(true);
+                setUsersDisliking([ ...usersDisliking, userId]);
                 console.log(dislikes);
+                console.log(usersDisliking);
             })
         }
     }

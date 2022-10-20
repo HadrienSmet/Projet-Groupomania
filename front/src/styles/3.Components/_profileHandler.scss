@@ -1,12 +1,15 @@
 .modal {
-    @media screen and (max-width: 767px) {
-        position: absolute;
+    @media screen and (min-width: 1025px) {
+        top: 239px;
+        left: 15.5%;
     }
+    position: absolute;
     &__button {
-        @media screen and (max-width: 767px) {
-            position: absolute;
+        @media screen and (min-width: 1025px) {
+            height: 199px;
         }
-        border: 1px solid $primary-color !important;
+        position: absolute;
+        border: 3px solid $primary-color !important;
         color: $primary-color !important;
         z-index: 2;
     }

@@ -1,5 +1,5 @@
 footer {
-    @media screen and (min-width: 1025px) {
+    @media screen and (min-width: 768px) {
         flex-direction: row;
         justify-content: space-between;
         text-align: center;
@@ -12,6 +12,7 @@ footer {
     align-items: center;
     gap: 15px;
     padding: 20px 0 30px;
+    transition: 0.2s;
     .footer-contact {
         @include rowCenter;
         gap: 20px;
@@ -28,4 +29,7 @@ footer {
         width: 200px;
         height: 50px;
     }
+}
+footer.active{
+    filter: blur(3px);
 }

@@ -10,7 +10,7 @@
     padding: 20px 0;
     border-radius: 15px;
     background: $primary-color;
-    top: 20px;
+    top: 10px;
     right: -200px;
     transition: 0.5s ease-out;
     z-index: 4;
@@ -46,8 +46,9 @@
 }
 .side-bar.active {
     right: 10px;
+    filter: blur(0) !important;
 }
-.active span {
+.side-bar.active span {
     position: absolute;
     background-color: $primary-color !important;
     &:nth-child(1) {
