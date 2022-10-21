@@ -2,11 +2,15 @@ import illu from "../assets/images/img-socialnetwork-welcom-removebg-preview.png
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setUserLogged } from "../features/login.slice";
+import { getPosts } from "../features/posts.slice";
+import { setProfileData } from "../features/profile.slice";
 const Welcome = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(setUserLogged(false));
+        dispatch(getPosts(null));
+        dispatch(setProfileData(null));
         localStorage.clear();
     }, [dispatch]);
 

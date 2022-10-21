@@ -1,8 +1,8 @@
 .signup-section {
     @media screen and (min-width: 1025px) {
         flex-direction: row;
-        height: calc(100vh - 240px);
-        padding-top: 150px;
+        height: calc(100vh - 195px);
+        padding-top: 105px;
     }
     @media screen and (max-width: 1024px) {
         padding: 120px 0 20px;
@@ -29,8 +29,8 @@
     @media screen and (min-width: 1025px) {
         flex-direction: row;
         gap: 40px;
-        height: calc(100vh - 240px);
-        padding-top: 150px;
+        height: calc(100vh - 195px);
+        padding-top: 105px;
     }
     @media screen and (max-width: 1024px) {
         padding: 120px 0 20px;

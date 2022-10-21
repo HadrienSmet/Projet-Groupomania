@@ -13,6 +13,9 @@ const Home = () => {
     const postsData = useSelector((state) => state.postsWarehouse.posts);
     const isComplete = useSelector((state) => state.profileCompletion.isComplete);
     let { token } = getJwtToken();
+    let rightOrderData;
+    postsData ? rightOrderData = [...postsData] : rightOrderData = null;
+
 
     useEffect(() => {
         
@@ -28,6 +31,7 @@ const Home = () => {
             .then(res => {
                 dispatch(getPosts(res.data))
                 console.log(isComplete);
+                console.log(postsData);
             })
             .catch(err => console.log(err));
             // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,12 +48,18 @@ const Home = () => {
                 ? 
                     <PostForm /> 
                 : 
-                    <h2>Veuillez finaliser votre profile avant de partager avec vos collegues.</h2> }
+                    <div className="uncomplete-division">
+                        <h2>Veuillez finaliser votre profile avant de partager avec vos collegues.</h2>
+                        <div className="fake-padding"></div>
+                    </div> }
                 <div className="home-page__post-container">
                     <ul>
-                        {postsData && postsData.map((post) => (
-                            <li key={ post._id }><Post  data={ post } /></li>
-                        ))}
+                        {postsData && rightOrderData
+                            .sort((a, b) => b.date - a.date)
+                            .map((post) => (
+                                <li key={ post._id }><Post  data={ post } /></li>
+                            ))
+                        };
                     </ul>
                 </div>
             </div>

@@ -17,6 +17,7 @@ export default function FormDialog() {
   const [pseudo, setPseudo] = React.useState("");
   const [profileFile, setProfileFile] = React.useState("");
   const [profileFileUrl, setProfileFileUrl] = React.useState("");
+  const [wasAlreadyFill, setWasAlreadyFill] = React.useState(true);
   
   const dispatch = useDispatch();
   
@@ -55,6 +56,7 @@ export default function FormDialog() {
         .then(res => {
           dispatch(setProfileData(JSON.stringify(res.data.updateData)));
           dispatch(toggleCompletion(true));
+          setWasAlreadyFill(false);
         })
     }
   };
@@ -76,9 +78,17 @@ export default function FormDialog() {
         ?
           <div className="modal__profile-button">
             <div className="modal__profile-button__img-container">
-              <img src={profileData.profilePicture} alt="img" />
+              {wasAlreadyFill === true 
+              ? 
+                <img src={profileData.profilePicture} alt="img"/>
+              :
+                <img src={profileFileUrl} alt='img'/> }
             </div>  
-            <p>{profileData.pseudo}</p>
+            {wasAlreadyFill === true
+            ?
+              <p>{profileData.pseudo}</p>
+            :
+              <p>{pseudo}</p>}
           </div> 
         :  
           <p>Editer profil</p> }
