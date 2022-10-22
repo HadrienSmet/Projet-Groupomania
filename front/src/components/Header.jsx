@@ -10,6 +10,7 @@ const Header = () => {
     const [scrollY, setScrollY] = useState(0);
     const loggedData = useSelector((state) => state.loggedIn.login);
 
+    //Handles the header's behavior when the user is scrolling
     const handleScroll = () => {
         const header = document.querySelector("header");
         if (window.scrollY < scrollY) {

@@ -8,6 +8,9 @@
         top: 25px;
         // left: calc(50% + 70px);
     }
+    @media screen and (max-width: 767px) {
+        // top: 0px;
+    }
     position: relative;
     left: 50%;
     transform: translateX(-50%); 
@@ -90,8 +93,24 @@
         overflow: hidden;
     }
     #label-file {
+        @media screen and (max-width: 767px) {
+            display: none;
+        }
         top: 20px;
         left: 10px;
+    }
+    #label-file-btn {
+        @media screen and (min-width: 768px) {
+            display: none;
+        }
+        color: $clr-1;
+        font-size: 25px;
+        position: relative;
+        top: 15px;
+        left: 5px;
+        padding: 5px 20px;
+        border: 2px solid $clr-1;
+        border-radius: 5px;
     }
     .post-form__submit-btn {
         height: 45px;

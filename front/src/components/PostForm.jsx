@@ -1,4 +1,4 @@
-import { FaPenNib } from "react-icons/fa";
+import { FaPenNib, FaFileImage } from "react-icons/fa";
 import { useState } from "react";
 import axios from "axios";
 import { postFormClickAnimation } from "../utils/functions/animations";
@@ -63,7 +63,7 @@ const PostForm = () => {
 
     //Handles the post to the API
     //@Params { Type: Object } --> the data from the submit event, only here to prevent the behavior by default
-    //It get all the data it needs  before putting it into a new FormData constructor
+    //It gets all the data it needs  before putting it into a new FormData constructor
     //The request is a post method and the authorization is allowed by the token provided by the localStorage
     const handlePost = async (e) => {
         e.preventDefault();
@@ -140,11 +140,14 @@ const PostForm = () => {
 
                     { fileUrl === "" 
                     ? 
-                        <label 
-                            htmlFor="userFile" 
-                            id="label-file" 
-                            onClick={(e) => postFormClickAnimation(e, "#label-file")}
-                        >Ajouter une image</label> 
+                        <div className="file-container">
+                            <label 
+                                htmlFor="userFile" 
+                                id="label-file" 
+                                onClick={(e) => postFormClickAnimation(e, "#label-file")}
+                            >Ajouter une image</label>
+                            <label htmlFor="userFile" id="label-file-btn"><FaFileImage /></label> 
+                        </div>
                     : 
                         null}
 

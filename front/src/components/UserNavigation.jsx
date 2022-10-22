@@ -2,10 +2,6 @@ import { Link } from 'react-router-dom';
 import { handlerRodAnimation, removeRod, showMeRod, handlerUpBgAnimation, handlerDownBgAnimation } from '../utils/functions/animations';
 
 const UserNavigation = () => {
-    //Think it is explicite enough
-    // const ciao = () => {
-    //     localStorage.clear();
-    // }
     return (
         <nav>
             <ul 
@@ -23,7 +19,6 @@ const UserNavigation = () => {
                         className='firstChild' 
                         onMouseEnter={(e) => handlerUpBgAnimation(e)} 
                         onMouseLeave={(e) => handlerDownBgAnimation(e)} 
-                        // onClick={ ciao() }
                     >Déconnexion</Link>
                 </li>
                 <li 

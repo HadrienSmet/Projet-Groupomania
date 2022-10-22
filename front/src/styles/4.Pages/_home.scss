@@ -7,9 +7,14 @@
         padding: 45px;
         padding-top: 120px;
         h1 {
-            @media screen and (max-width: 1024px) {
+            @media screen and (min-width: 768px) and (max-width: 1024px) {
                 margin-top: 15px;
                 margin-left: 180px;
+            }
+            @media screen and (max-width: 767px) {
+                // min-width: 250px;
+                // margin-left: 120px;
+                // margin-bottom: 120px;
             }
             color: $primary-color;
             margin-bottom: 30px;
@@ -32,9 +37,17 @@
     }
 }
 .uncomplete-division h2 {
+    @media screen and (min-width: 1025px) {
+        left: calc(25% + 45px);
+    }
     position: relative;
     top: 130px;
-    left: calc(25% + 45px);
+}
+.fake-margin {
+    @media screen and (min-width: 768px) {
+        height: 0;
+    }
+    height: 150px;
 }
 .fake-padding {
     height: 200px;

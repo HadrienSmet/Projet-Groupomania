@@ -7,6 +7,7 @@
     @media screen and (max-width: 1024px) {
         padding: 120px 0 20px;
     }
+    min-height: 550px;
     display: flex;
     flex-direction: column;
     background-color: lighten($primary-color, 47);
@@ -35,6 +36,7 @@
     @media screen and (max-width: 1024px) {
         padding: 120px 0 20px;
     }
+    min-height: 550px;
     display: flex;
     flex-direction: column;
     background-color: lighten($primary-color, 47);

@@ -1,12 +1,23 @@
 .modal {
     @media screen and (min-width: 1025px) {
-        top: 239px;
+        top: 259px;
         left: 15.5%;
+    }
+    @media screen and (max-width: 767px) {
+        left: 10%;
+        width: 80%;
+        top: 250px;
+    }
+    @media screen and (max-width: 350px) {
+        top: 340px;
     }
     position: absolute;
     &__button {
         @media screen and (min-width: 1025px) {
             height: 199px;
+        }
+        @media screen and (max-width: 767px) {
+            width: 100%;
         }
         position: absolute;
         border: 3px solid $primary-color !important;
@@ -43,16 +54,17 @@
         }
     }
     &__dialog-container {
+        @media screen and (min-width: 768px) {
+            width: 450px;
+        }
         padding: 20px;
-        width: 450px;
+        width: calc(100% - 80px);
+        max-width: none;
         border: 20px inset lighten($primary-color, 10);
         border-radius: 10px;
         #pseudo {
             border: 1px solid $primary-color !important;
             border-radius: 3px;
-            // &::after {
-                
-            // }
         }
         #label-file {
             border: 1px solid $primary-color;

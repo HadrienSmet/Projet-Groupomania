@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
 
 const MobileGuestNavigation = () => {
+    //Handles the sidebar's behavior when the user clicks on the toggle button
+    //The sidebar is either shown or hidden
+    //When it is shown the entiere app gets covered by a filter
     const handleToggle = () => {
         const sideBar = document.querySelector('.side-bar');
         const section = document.querySelector('section');

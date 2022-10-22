@@ -7,6 +7,7 @@ import { setProfileData } from "../features/profile.slice";
 const Welcome = () => {
     const dispatch = useDispatch();
 
+    //This useEffect clears the redux store and the localStorage
     useEffect(() => {
         dispatch(setUserLogged(false));
         dispatch(getPosts(null));

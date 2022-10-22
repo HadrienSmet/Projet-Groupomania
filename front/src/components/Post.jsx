@@ -19,6 +19,7 @@ const Post = (props) => {
     const dispatch = useDispatch();
     let { token, userId } = getJwtToken();
 
+    //This useEffect is here to define some states related by the relation between the user and the post
     useEffect(() => {
         const checkAuthor = () => {
             if (userId === props.data.userId) {
@@ -34,6 +35,8 @@ const Post = (props) => {
         checkAuthor()
     }, [userId, props.data.userId, props.data.usersLiked, props.data.usersDisliked])
 
+    //This function handles the modification of a post
+    //@Params {type: Object} --> the params of the event: the value of the post (text, file)
     const editPost = (e) => {
         console.log(e);
         e.preventDefault();
@@ -70,7 +73,8 @@ const Post = (props) => {
                 })
         }
     }
-
+    //Handles the suppression of a post
+    //@Params {type: Object} --> the params of the onClick event
     const removePost = (e) => {
         console.log(e);
         console.log(token);
@@ -85,6 +89,11 @@ const Post = (props) => {
         })
     }
 
+    //Handles the behavior of the app when a user clicks on the like button
+    //If the user already liked the post:
+    //-->The like is removed from the database and from the localState
+    //Else:
+    //-->The like is added to the database and to the LocalState
     const likesHandler = () => {
         if (usersLiking.includes(userId)) {
             axios({
@@ -129,6 +138,11 @@ const Post = (props) => {
         }
     }
 
+    //Handles the behavior of the app when a user clicks on the dislike button
+    //If the user already disliked the post:
+    //-->The dislike is removed from the database and from the localState
+    //Else:
+    //-->The dislike is added to the database and to the LocalState
     const dislikesHandler = () => {
         if (usersDisliking.includes(userId)) {
             axios({

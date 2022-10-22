@@ -12,13 +12,14 @@ export const setJwtToken = (data) => {
     localStorage.setItem("jwtToken", JSON.stringify(data));
 }
 
+//This function manipulates a timeStamp to return it with the proper shape
 export const dateParser = (num) => {
     let options = {
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
-        weekday: "long",
-        year: "numeric",
+        weekday: "short",
+        year: "2-digit",
         month: "short",
         day: "numeric"
     };

@@ -24,12 +24,15 @@ export default function FormDialog() {
   const isComplete = useSelector((state) => state.profileCompletion.isComplete);
   const profileData = useSelector((state) => state.profileStore.profile);
   
-
+  //Handles the opening of the modal
   const handleClickOpen = () => {
     setOpen(true);
     console.log(profileData);
   };
 
+  //Handles the closing of the modal
+  //If the fields are filled 
+  //-->Posts the data to the database to complete the user profile
   const handleClose = () => {
     setOpen(false);
     if (pseudo !== "" && profileFile !== "") {
@@ -61,10 +64,14 @@ export default function FormDialog() {
     }
   };
 
+  //Sets the value provided by the user in the localState
+  //@Params {type: Object} --> The params of the onChange event
   const handlePseudo = (e) => {
     setPseudo(e.target.value);
   };
 
+  //Sets the value provided by the user in the localState
+  //@Params {type: Object} --> The params of the onChange event
   const handleProfileFile = (e) => {
     console.log(e);
     setProfileFileUrl(URL.createObjectURL(e.target.files[0]));
