@@ -1,15 +1,18 @@
-import { FaRegThumbsUp, FaThumbsUp, FaRegThumbsDown, FaThumbsDown, FaEdit, FaTrash, FaPaperPlane } from "react-icons/fa";
+import { FaRegThumbsUp, FaThumbsUp, FaRegThumbsDown, FaThumbsDown, FaEdit, FaTrash, FaPaperPlane, FaFileImage, FaTimes } from "react-icons/fa";
 import Button from '@mui/material/Button';
 import axios from "axios";
-import { dateParser, getJwtToken } from "../utils/functions/tools";
+import { dateParser, getJwtToken, mobileDateParser } from "../utils/functions/tools";
 import { useDispatch } from "react-redux";
-import { changePost, deletePost } from "../features/posts.slice";
+import { deletePost, getPosts } from "../features/posts.slice";
 import { useState, useEffect } from "react";
+import { adminID } from "../utils/adminPassword";
 
 const Post = (props) => {
     const [isAuthor, setIsAuthor] = useState(false);
     const [edit, setEdit] = useState(false);
     const [text, setText] = useState("");
+    const [newFile, setNewFile] = useState(undefined);
+    const [newFileUrl, setNewFileUrl] = useState(undefined);
     const [liked, setLiked] = useState(false);
     const [disliked, setDisliked] = useState(false);
     const [likes, setLikes] = useState(props.data.likes);
@@ -18,9 +21,11 @@ const Post = (props) => {
     const [usersDisliking, setUsersDisliking] = useState(props.data.usersDisliked);
     const dispatch = useDispatch();
     let { token, userId } = getJwtToken();
+    
 
     //This useEffect is here to define some states related by the relation between the user and the post
     useEffect(() => {
+        // const adminID = '635bb5eeafe2c81e556d45dd';
         const checkAuthor = () => {
             if (userId === props.data.userId) {
                 setIsAuthor(true);
@@ -32,32 +37,43 @@ const Post = (props) => {
                 setDisliked(true);
             }
         }
-        checkAuthor()
+        const checkAdmin = () => {
+            if (userId === adminID) {
+                setIsAuthor(true);
+            }
+        }
+        checkAuthor();
+        checkAdmin()
     }, [userId, props.data.userId, props.data.usersLiked, props.data.usersDisliked])
+
+    const handleNewFile = (e) => {
+        const btn = document.querySelector("#edit-file_" + props.data._id);
+        btn.style.color = "rgb(15, 217, 217)";
+        setNewFile(e.target.files[0]);
+        setNewFileUrl(URL.createObjectURL(e.target.files[0])); 
+        console.log(newFileUrl);     
+    }
+
+    const handleBtnBehavior = (e) => {
+        const element = document.querySelector(".post__content-container__remove-file-btn")
+        element.style.opacity = "0";
+        element.style.zIndex = "-1";
+    }
 
     //This function handles the modification of a post
     //@Params {type: Object} --> the params of the event: the value of the post (text, file)
     const editPost = (e) => {
+        // let imageUrlForRedux;
         console.log(e);
         e.preventDefault();
-        if (text) {
+        if (text || newFile !== undefined) {
             const post = new FormData();       
             post.append("userId", props.data.userId);
-            post.append("text", text);
+            text ? post.append("text", text) : post.append("text", props.data.text);
             post.append("date", props.data.date);
-            post.append("file", props.data.imageUrl);
-            const data = {
-                _id: props.data._id,
-                userId: props.data.userId,
-                text,
-                imageUrl: props.data.imageUrl,
-                date: props.data.date,
-                likes: 0,
-                dislikes: 0,
-                usersLiked: [],
-                usersDisliked: []
-            }
-
+            newFile !== undefined && newFile !== "" && post.append("file", newFile);
+            newFile === undefined && post.append("file", props.data.imageUrl);
+            newFile === "" && post.append("file", "");
             axios({
                 url: `http://localhost:3000/api/posts/${props.data._id}`,
                 method: "put",
@@ -69,7 +85,18 @@ const Post = (props) => {
             })
                 .then(res => {
                     setEdit(false);
-                    dispatch(changePost(data))
+                    axios({
+                        url: "http://localhost:3000/api/posts",
+                        method: "get",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "authorization": `bearer ${token}`
+                        }
+                    })
+                        .then(res => {
+                            dispatch(getPosts(res.data))
+                        })
+                        .catch(err => console.log(err));
                 })
         }
     }
@@ -192,28 +219,77 @@ const Post = (props) => {
                     <img src={props.data.profilePicture} alt="img" />
                 </div>
                 <h3>{props.data.pseudo}</h3>
-                <p>{dateParser(props.data.date)}</p>
+                <p id="date-for-big-screen">{dateParser(props.data.date)}</p>
+                <p id="date-for-small-screen">{mobileDateParser(props.data.date)}</p>
             </div>
             <div className="post__content-container">
-               {props.data.imageUrl !== "" && <img src={"http://localhost:3000/images/" + props.data.imageUrl.split("images/")[1] } alt="img" />}
+                {newFile !== "" 
+                    ?
+                        <div className="post__content-container__image-division">
+                            {props.data.imageUrl !== "" && newFileUrl === undefined &&
+                                <img src={"http://localhost:3000/images/" + props.data.imageUrl.split("images/")[1] } alt="img" />
+                            }
+                            {props.data.imageUrl !== "" && newFileUrl !== undefined &&
+                                <img src={newFileUrl} alt="img" />
+                            }
+                        </div> 
+                    :
+                        null
+                }
                 <div className="post__content-container__text">
                     { isAuthor && edit 
                     ? 
-                        <form action="" onSubmit={(e) => editPost(e)}>
+                        <form action="" id="editation" onSubmit={(e) => editPost(e)}>
                             <textarea
                                 type="text" 
                                 name="text"
                                 className="post__content-container__edit-area"
                                 defaultValue={props.data.text}
-                                onChange={(e) => setText(e.target.value)}></textarea>
-                            <Button
-                                variant="text"
-                                className="post__content-container__edit-btn"
-                            >
-                                <FaPaperPlane 
-                                    id={ "edit_" + props.data._id} 
-                                    onClick={(e) => editPost(e)}/>
-                            </Button>
+                                onChange={(e) => setText(e.target.value)}>
+                            </textarea>
+                            {props.data.imageUrl !== "" 
+                                ? 
+                                    <Button
+                                            variant="text"
+                                            className="post__content-container__remove-file-btn"
+                                            onClick={(e) => handleBtnBehavior(e)}
+                                        >
+                                            <FaTimes
+                                                id={ "rmv-file_" + props.data._id} 
+                                                onClick={() => {
+                                                    setNewFile("");
+                                                    setNewFileUrl("");
+                                                }}/>
+                                    </Button>
+                                :
+                                    <div className="fake-gap"></div>
+                            }
+                            <div className="post__content-container__edit-btn-container">
+                                <Button
+                                    variant="text"
+                                    className="post__content-container__edit-btn"
+                                    
+                                >
+                                    <FaPaperPlane 
+                                        id={ "edit_" + props.data._id} 
+                                        onClick={(e) => editPost(e)}/>
+                                </Button>
+                                <Button
+                                    variant="text"
+                                    className="post__content-container__edit-btn"
+                                >
+                                    <label htmlFor="input-new-file">
+                                        <FaFileImage id={ "edit-file_" + props.data._id} className="file-icon" />
+                                    </label>
+                                </Button>
+                                <input 
+                                    type="file" 
+                                    name="file" 
+                                    id="input-new-file" 
+                                    accept="image/*"
+                                    onChange={(e) => handleNewFile(e)}
+                                />
+                            </div>
                         </form>
                     : 
                         <p>{ props.data.text }</p>}

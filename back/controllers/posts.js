@@ -1,5 +1,4 @@
 const Post = require('../models/Post');
-
 const fs = require('fs');
 const { log } = require('console');
 
@@ -31,22 +30,31 @@ exports.createPost = (req, res, next) => {
  //If there is a file we get request's body but we change the value on the imageUrl's property
  //If there is no file we keep the request's body intact
 exports.modifyPost = (req, res, next) => {
-    const postObject = req.file ? {
-        ...JSON.parse(req.body.post),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : { ...req.body };
+    console.log("ctrllr.post l:35 req.body: " + JSON.stringify({ ...req.body }));
+    let postObject;
+    if (req.body.file == "") {
+        postObject = {
+            ...req.body,
+            imageUrl: ""
+        };
+    } else if (req.file) {
+        postObject = {
+            ...req.body,
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        };
+    } else {
+        postObject = { ...req.body };
+    }
 
-    console.log("ctrllr.posts l:26 postObject: " + JSON.stringify(postObject));
+    console.log("ctrllr.posts l:41 postObject: " + JSON.stringify(postObject));
 
     delete postObject._userId;
     Post.findOne({ _id: req.params.id })
         .then((post) => {
-            if ( post.userId != req.auth.userId) {
-                res.status(403).json({ error });
-            } else {
-                console.log("ctrllr.posts l:33: " + JSON.stringify(postObject));
+            if ( post.userId == req.auth.userId || process.env.ADMIN_ACCOUNT_ID == req.auth.userId) {
                 const filename = post.imageUrl.split('/images/')[1];
                 if (req.file) {
+                    console.log("ctrllr.post l:55: " + JSON.stringify(postObject));
                     fs.unlink(`images/${filename}`, () => {
                         Post.updateOne({ _id: req.params.id }, { ...postObject, id: req.params.id })
                             .then(() => res.status(200).json({ message: 'Post modifié!' }))
@@ -57,6 +65,8 @@ exports.modifyPost = (req, res, next) => {
                         .then(() => res.status(200).json({ message: 'Post modifié!' }))
                         .catch(error => res.status(401).json({ error }));
                 }
+            } else {
+                res.status(403).json({ error });
             }
         })
         .catch(error => res.status(400).json({ error }))
@@ -65,16 +75,16 @@ exports.modifyPost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
     Post.findOne({ _id: req.params.id})
         .then(post => {
-            if (post.userId != req.auth.userId) {
-                res.status(403).json({message: 'Not authorized'});
-            } else {
-                console.log("ctrllrs.post l:67 post: " + post);
+            if (post.userId == req.auth.userId || process.env.ADMIN_ACCOUNT_ID == req.auth.userId) {
+                console.log("ctrllrs.post l:71 post: " + post);
                 const filename = post.imageUrl.split('/images/')[1];
                 fs.unlink(`images/${filename}`, () => {
                     Post.deleteOne({_id: req.params.id})
                         .then(() => res.status(200).json({ message: 'Post supprimé !' }))
                         .catch(error => res.status(401).json({ error }));
                 });
+            } else {
+                res.status(403).json({message: 'Not authorized'});
             }
         })
         .catch( error => res.status(500).json({ message: "Je trouve pas le post.." }));
@@ -116,7 +126,6 @@ exports.ratingPost = (req, res, next) => {
                 })
                 .catch(error => res.status(400).json({ error }));
         } else if (object.like === 1) {
-            // console.log("ctrllrs.post l:119 object.userId: " + object);
             console.log("ctrllrs.post l:120 req.auth: " + JSON.stringify(req.auth));
             Post.updateOne({ _id: req.params.id }, { $push: { usersLiked: req.auth.userId }, $inc: { likes: 1 } })
                 .then(post => res.status(200).json(post))

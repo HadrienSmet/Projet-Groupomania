@@ -152,11 +152,14 @@
         display: none;
     }
     #front-picture {
+        @media screen and (min-width: 768px) {
+            left: -150px;
+        }
         height: 120px;
         width: 120px;
         object-fit: cover;
         border-radius: 20px;
         position: relative;
-        left: -150px;
+        left: -30px;
     }
 }

@@ -86,16 +86,20 @@ export default function FormDialog() {
           <div className="modal__profile-button">
             <div className="modal__profile-button__img-container">
               {wasAlreadyFill === true 
-              ? 
-                <img src={profileData.profilePicture} alt="img"/>
-              :
-                <img src={profileFileUrl} alt='img'/> }
+                ? 
+                  <img src={profileData.profilePicture} alt="img"/>
+                :
+                  <img src={profileFileUrl} alt='img'/> 
+              }
             </div>  
-            {wasAlreadyFill === true
-            ?
-              <p>{profileData.pseudo}</p>
-            :
-              <p>{pseudo}</p>}
+            <div className="modal__profile-button__pseudo-container">
+              {wasAlreadyFill === true
+                ?
+                  <p>{profileData.pseudo}</p>
+                :
+                  <p>{pseudo}</p>
+              }
+            </div>
           </div> 
         :  
           <p>Editer profil</p> }

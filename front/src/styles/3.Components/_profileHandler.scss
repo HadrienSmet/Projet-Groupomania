@@ -42,6 +42,9 @@
                 transform: translate(-50%, -50%);
             }
         }
+        &__pseudo-container {
+            font-size: 10px;
+        }
     }
     &__profile-container {
         padding: 20px;
