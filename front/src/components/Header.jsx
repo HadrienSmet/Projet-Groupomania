@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import logo from "../assets/images/icon-left-font-removebg.png";
-import GuestNavigation from "./GuestNavigation";
-import MobileGuestNavigation from "./MobileGuestNavigation";
-import MobileUserNavigation from "./MobileUserNavigation";
-import UserNavigation from "./UserNavigation";
+import GuestNavigation from "./navigation/GuestNavigation";
+import MobileGuestNavigation from "./navigation/MobileGuestNavigation";
+import MobileUserNavigation from "./navigation/MobileUserNavigation";
+import UserNavigation from "./navigation/UserNavigation";
 
 const Header = () => {
     const [scrollY, setScrollY] = useState(0);
@@ -18,25 +18,18 @@ const Header = () => {
         } else {
             header.style.top = "-104px";
         }
-        setScrollY(window.scrollY);  
-    }
-    window.addEventListener('scroll', (e) => handleScroll())
+        setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", (e) => handleScroll());
 
     return (
         <header>
-            <img src={ logo } alt="Logo Groupomania" id="header-logo" />
-            { loggedData ?
-                <MobileUserNavigation />
-            :
-                <MobileGuestNavigation />
-             }
-            
-            { loggedData ? 
-                <UserNavigation />
-            :
-                <GuestNavigation />}
+            <img src={logo} alt="Logo Groupomania" id="header-logo" />
+            {loggedData ? <MobileUserNavigation /> : <MobileGuestNavigation />}
+
+            {loggedData ? <UserNavigation /> : <GuestNavigation />}
         </header>
-    )
-}
+    );
+};
 
 export default Header;

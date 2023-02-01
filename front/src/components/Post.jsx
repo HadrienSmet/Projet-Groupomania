@@ -1,7 +1,21 @@
-import { FaRegThumbsUp, FaThumbsUp, FaRegThumbsDown, FaThumbsDown, FaEdit, FaTrash, FaPaperPlane, FaFileImage, FaTimes } from "react-icons/fa";
-import Button from '@mui/material/Button';
+import {
+    FaRegThumbsUp,
+    FaThumbsUp,
+    FaRegThumbsDown,
+    FaThumbsDown,
+    FaEdit,
+    FaTrash,
+    FaPaperPlane,
+    FaFileImage,
+    FaTimes,
+} from "react-icons/fa";
+import Button from "@mui/material/Button";
 import axios from "axios";
-import { dateParser, getJwtToken, mobileDateParser } from "../utils/functions/tools";
+import {
+    dateParser,
+    getJwtToken,
+    mobileDateParser,
+} from "../utils/functions/tools";
 import { useDispatch } from "react-redux";
 import { deletePost, getPosts } from "../features/posts.slice";
 import { useState, useEffect } from "react";
@@ -18,10 +32,11 @@ const Post = (props) => {
     const [likes, setLikes] = useState(props.data.likes);
     const [dislikes, setDislikes] = useState(props.data.dislikes);
     const [usersLiking, setUsersLiking] = useState(props.data.usersLiked);
-    const [usersDisliking, setUsersDisliking] = useState(props.data.usersDisliked);
+    const [usersDisliking, setUsersDisliking] = useState(
+        props.data.usersDisliked
+    );
     const dispatch = useDispatch();
     let { token, userId } = getJwtToken();
-    
 
     //This useEffect is here to define some states related by the relation between the user and the post
     useEffect(() => {
@@ -36,42 +51,50 @@ const Post = (props) => {
             if (props.data.usersDisliked.includes(userId)) {
                 setDisliked(true);
             }
-        }
+        };
         const checkAdmin = () => {
             if (userId === adminID) {
                 setIsAuthor(true);
             }
-        }
+        };
         checkAuthor();
-        checkAdmin()
-    }, [userId, props.data.userId, props.data.usersLiked, props.data.usersDisliked])
+        checkAdmin();
+    }, [
+        userId,
+        props.data.userId,
+        props.data.usersLiked,
+        props.data.usersDisliked,
+    ]);
 
     const handleNewFile = (e) => {
         const btn = document.querySelector("#edit-file_" + props.data._id);
         btn.style.color = "rgb(15, 217, 217)";
         setNewFile(e.target.files[0]);
-        setNewFileUrl(URL.createObjectURL(e.target.files[0])); 
-        console.log(newFileUrl);     
-    }
+        setNewFileUrl(URL.createObjectURL(e.target.files[0]));
+    };
 
     const handleBtnBehavior = (e) => {
-        const element = document.querySelector(".post__content-container__remove-file-btn")
+        const element = document.querySelector(
+            ".post__content-container__remove-file-btn"
+        );
         element.style.opacity = "0";
         element.style.zIndex = "-1";
-    }
+    };
 
     //This function handles the modification of a post
     //@Params {type: Object} --> the params of the event: the value of the post (text, file)
     const editPost = (e) => {
-        // let imageUrlForRedux;
-        console.log(e);
         e.preventDefault();
         if (text || newFile !== undefined) {
-            const post = new FormData();       
+            const post = new FormData();
             post.append("userId", props.data.userId);
-            text ? post.append("text", text) : post.append("text", props.data.text);
+            text
+                ? post.append("text", text)
+                : post.append("text", props.data.text);
             post.append("date", props.data.date);
-            newFile !== undefined && newFile !== "" && post.append("file", newFile);
+            newFile !== undefined &&
+                newFile !== "" &&
+                post.append("file", newFile);
             newFile === undefined && post.append("file", props.data.imageUrl);
             newFile === "" && post.append("file", "");
             axios({
@@ -80,41 +103,36 @@ const Post = (props) => {
                 data: post,
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization": `bearer ${token}`                   
-                }
-            })
-                .then(res => {
-                    setEdit(false);
-                    axios({
-                        url: "http://localhost:3000/api/posts",
-                        method: "get",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "authorization": `bearer ${token}`
-                        }
-                    })
-                        .then(res => {
-                            dispatch(getPosts(res.data))
-                        })
-                        .catch(err => console.log(err));
-                })
+                    authorization: `bearer ${token}`,
+                },
+            }).then((res) => {
+                setEdit(false);
+                axios({
+                    url: "http://localhost:3000/api/posts",
+                    method: "get",
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: `bearer ${token}`,
+                    },
+                }).then((res) => {
+                    dispatch(getPosts(res.data));
+                });
+            });
         }
-    }
+    };
     //Handles the suppression of a post
     //@Params {type: Object} --> the params of the onClick event
     const removePost = (e) => {
-        console.log(e);
-        console.log(token);
-        dispatch(deletePost(props.data._id))
+        dispatch(deletePost(props.data._id));
         axios({
             url: `http://localhost:3000/api/posts/${props.data._id}`,
             method: "delete",
             headers: {
                 "Content-Type": "application/json",
-                "authorization": `bearer ${token}`
-            }
-        })
-    }
+                authorization: `bearer ${token}`,
+            },
+        });
+    };
 
     //Handles the behavior of the app when a user clicks on the like button
     //If the user already liked the post:
@@ -125,45 +143,38 @@ const Post = (props) => {
         if (usersLiking.includes(userId)) {
             axios({
                 url: `http://localhost:3000/api/posts/${props.data._id}/like`,
-                method: 'post',
+                method: "post",
                 data: {
-                    like: 0
+                    like: 0,
                 },
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization": `bearer ${token}`
-                }
-            })
-            .then(() => {
+                    authorization: `bearer ${token}`,
+                },
+            }).then(() => {
                 setLikes(likes - 1);
                 setLiked(false);
                 setUsersLiking(usersLiking.splice(userId, 1));
-                setUsersLiking(usersLiking.filter(id => id !== userId));
-                console.log(likes);
-                console.log(usersLiking);
-            })
+                setUsersLiking(usersLiking.filter((id) => id !== userId));
+            });
         } else if (!usersDisliking.includes(userId)) {
             axios({
                 url: `http://localhost:3000/api/posts/${props.data._id}/like`,
-                method: 'post',
+                method: "post",
                 data: {
-                    like: 1
+                    like: 1,
                 },
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization": `bearer ${token}`
-                }
-            })
-            .then(() => {
-                
+                    authorization: `bearer ${token}`,
+                },
+            }).then(() => {
                 setLikes(likes + 1);
                 setLiked(true);
                 setUsersLiking([...usersLiking, userId]);
-                console.log(likes);
-                console.log(usersLiking);
-            })
+            });
         }
-    }
+    };
 
     //Handles the behavior of the app when a user clicks on the dislike button
     //If the user already disliked the post:
@@ -174,158 +185,173 @@ const Post = (props) => {
         if (usersDisliking.includes(userId)) {
             axios({
                 url: `http://localhost:3000/api/posts/${props.data._id}/like`,
-                method: 'post',
+                method: "post",
                 data: {
-                    like: 0
+                    like: 0,
                 },
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization": `bearer ${token}`
-                }
-            })
-            .then(() => {
+                    authorization: `bearer ${token}`,
+                },
+            }).then(() => {
                 setDislikes(dislikes - 1);
                 setDisliked(false);
-                setUsersDisliking(usersDisliking.filter(id => id !== userId));
-                console.log(dislikes);
-                console.log(usersDisliking);
-            })
+                setUsersDisliking(usersDisliking.filter((id) => id !== userId));
+            });
         } else if (!usersLiking.includes(userId)) {
             axios({
                 url: `http://localhost:3000/api/posts/${props.data._id}/like`,
-                method: 'post',
+                method: "post",
                 data: {
-                    like: -1
+                    like: -1,
                 },
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization": `bearer ${token}`
-                }
-            })
-            .then(() => {
+                    authorization: `bearer ${token}`,
+                },
+            }).then(() => {
                 setDislikes(dislikes + 1);
                 setDisliked(true);
-                setUsersDisliking([ ...usersDisliking, userId]);
-                console.log(dislikes);
-                console.log(usersDisliking);
-            })
+                setUsersDisliking([...usersDisliking, userId]);
+            });
         }
-    }
+    };
 
     return (
-        <div className="post" >
+        <div className="post">
             <div className="post__info-container">
                 <div className="post__info-container__img-container">
                     <img src={props.data.profilePicture} alt="img" />
                 </div>
                 <h3>{props.data.pseudo}</h3>
                 <p id="date-for-big-screen">{dateParser(props.data.date)}</p>
-                <p id="date-for-small-screen">{mobileDateParser(props.data.date)}</p>
+                <p id="date-for-small-screen">
+                    {mobileDateParser(props.data.date)}
+                </p>
             </div>
             <div className="post__content-container">
-                {newFile !== "" 
-                    ?
-                        <div className="post__content-container__image-division">
-                            {props.data.imageUrl !== "" && newFileUrl === undefined &&
-                                <img src={"http://localhost:3000/images/" + props.data.imageUrl.split("images/")[1] } alt="img" />
-                            }
-                            {props.data.imageUrl !== "" && newFileUrl !== undefined &&
+                {newFile !== "" ? (
+                    <div className="post__content-container__image-division">
+                        {props.data.imageUrl !== "" &&
+                            newFileUrl === undefined && (
+                                <img
+                                    src={
+                                        "http://localhost:3000/images/" +
+                                        props.data.imageUrl.split("images/")[1]
+                                    }
+                                    alt="img"
+                                />
+                            )}
+                        {props.data.imageUrl !== "" &&
+                            newFileUrl !== undefined && (
                                 <img src={newFileUrl} alt="img" />
-                            }
-                        </div> 
-                    :
-                        null
-                }
+                            )}
+                    </div>
+                ) : null}
                 <div className="post__content-container__text">
-                    { isAuthor && edit 
-                    ? 
-                        <form action="" id="editation" onSubmit={(e) => editPost(e)}>
+                    {isAuthor && edit ? (
+                        <form
+                            action=""
+                            id="editation"
+                            onSubmit={(e) => editPost(e)}
+                        >
                             <textarea
-                                type="text" 
+                                type="text"
                                 name="text"
                                 className="post__content-container__edit-area"
                                 defaultValue={props.data.text}
-                                onChange={(e) => setText(e.target.value)}>
-                            </textarea>
-                            {props.data.imageUrl !== "" 
-                                ? 
-                                    <Button
-                                            variant="text"
-                                            className="post__content-container__remove-file-btn"
-                                            onClick={(e) => handleBtnBehavior(e)}
-                                        >
-                                            <FaTimes
-                                                id={ "rmv-file_" + props.data._id} 
-                                                onClick={() => {
-                                                    setNewFile("");
-                                                    setNewFileUrl("");
-                                                }}/>
-                                    </Button>
-                                :
-                                    <div className="fake-gap"></div>
-                            }
+                                onChange={(e) => setText(e.target.value)}
+                            ></textarea>
+                            {props.data.imageUrl !== "" ? (
+                                <Button
+                                    variant="text"
+                                    className="post__content-container__remove-file-btn"
+                                    onClick={(e) => handleBtnBehavior(e)}
+                                >
+                                    <FaTimes
+                                        id={"rmv-file_" + props.data._id}
+                                        onClick={() => {
+                                            setNewFile("");
+                                            setNewFileUrl("");
+                                        }}
+                                    />
+                                </Button>
+                            ) : (
+                                <div className="fake-gap"></div>
+                            )}
                             <div className="post__content-container__edit-btn-container">
                                 <Button
                                     variant="text"
                                     className="post__content-container__edit-btn"
-                                    
                                 >
-                                    <FaPaperPlane 
-                                        id={ "edit_" + props.data._id} 
-                                        onClick={(e) => editPost(e)}/>
+                                    <FaPaperPlane
+                                        id={"edit_" + props.data._id}
+                                        onClick={(e) => editPost(e)}
+                                    />
                                 </Button>
                                 <Button
                                     variant="text"
                                     className="post__content-container__edit-btn"
                                 >
                                     <label htmlFor="input-new-file">
-                                        <FaFileImage id={ "edit-file_" + props.data._id} className="file-icon" />
+                                        <FaFileImage
+                                            id={"edit-file_" + props.data._id}
+                                            className="file-icon"
+                                        />
                                     </label>
                                 </Button>
-                                <input 
-                                    type="file" 
-                                    name="file" 
-                                    id="input-new-file" 
+                                <input
+                                    type="file"
+                                    name="file"
+                                    id="input-new-file"
                                     accept="image/*"
                                     onChange={(e) => handleNewFile(e)}
                                 />
                             </div>
                         </form>
-                    : 
-                        <p>{ props.data.text }</p>}
+                    ) : (
+                        <p>{props.data.text}</p>
+                    )}
                 </div>
             </div>
             <div className="post__modification-container">
                 <div className="post__likes-container">
                     <div className="post__likes-container__likes">
-                        <p>{ likes }</p>
-                        { liked === true ? 
+                        <p>{likes}</p>
+                        {liked === true ? (
                             <FaThumbsUp onClick={() => likesHandler()} />
-                        :
-                            <FaRegThumbsUp onClick={() => likesHandler()} />}
+                        ) : (
+                            <FaRegThumbsUp onClick={() => likesHandler()} />
+                        )}
                     </div>
                     <div className="post__likes-container__dislikes">
-                        <p>{ dislikes }</p>
-                        { disliked === true 
-                        ? 
+                        <p>{dislikes}</p>
+                        {disliked === true ? (
                             <FaThumbsDown onClick={() => dislikesHandler()} />
-                        :
-                            <FaRegThumbsDown onClick={() => dislikesHandler()} />}
+                        ) : (
+                            <FaRegThumbsDown
+                                onClick={() => dislikesHandler()}
+                            />
+                        )}
                     </div>
                 </div>
-                { isAuthor && (
+                {isAuthor && (
                     <div className="post__btn-container">
-                        <Button 
-                        className="post__btn-container__btn"
-                            variant="text" 
+                        <Button
+                            className="post__btn-container__btn"
+                            variant="text"
                             onClick={() => setEdit(!edit)}
-                        ><FaEdit /></Button>
-                        <Button 
-                            variant="text" 
-                            id={ "delete_" + props.data._id}
+                        >
+                            <FaEdit />
+                        </Button>
+                        <Button
+                            variant="text"
+                            id={"delete_" + props.data._id}
                             className="post__btn-container__btn"
                             onClick={(e) => removePost(e)}
-                        ><FaTrash /></Button>
+                        >
+                            <FaTrash />
+                        </Button>
                     </div>
                 )}
             </div>
