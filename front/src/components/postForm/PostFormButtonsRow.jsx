@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useRef } from "react";
 import { FaFileImage } from "react-icons/fa";
 import Button from "@mui/material/Button";
-import { postFormClickAnimation } from "../../utils/functions/animations";
+import { postFormClickAnimation } from "../../utils/functions/animations/onClick/postFormClickAnimation";
 
 const PostFormButtonsRow = ({ fileUrl, handleFile }) => {
+    const labelRef = useRef(null);
+
     return (
         <div className="last-row">
             <div className="label-animation-container">
                 {fileUrl === "" ? (
                     <div className="file-container">
                         <label
+                            ref={labelRef}
                             htmlFor="userFile"
                             id="label-file"
-                            onClick={(e) =>
-                                postFormClickAnimation(e, "#label-file")
-                            }
+                            onClick={(e) => postFormClickAnimation(e, labelRef)}
                         >
                             Ajouter une image
                         </label>

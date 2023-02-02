@@ -1,13 +1,15 @@
 import { useEffect } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { setUserLogged } from "../features/login.slice";
 import { getPosts } from "../features/posts.slice";
+
 import { getJwtToken } from "../utils/functions/tools";
 import { axiosGetPosts } from "../utils/functions/posts/axiosGetPosts";
 
 import FormDialog from "../components/profileHandler/ProfileHandler";
 import PostForm from "../components/postForm/PostForm";
-import Post from "../components/Post";
+import Post from "../components/post/Post";
 
 const useHome = () => {
     const dispatch = useDispatch();

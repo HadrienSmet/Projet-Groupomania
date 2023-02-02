@@ -1,21 +1,23 @@
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import signInIllu from "../assets/images/sign-in-illu.png";
+
 import { useDispatch } from "react-redux";
 import { setUserLogged } from "../features/login.slice";
 import { toggleCompletion } from "../features/isComplete.slice";
 import { setProfileData } from "../features/profile.slice";
-import { signInClickAnimation } from "../utils/functions/animations";
+
+import { signInClickAnimation } from "../utils/functions/animations/onClick/signinClickAnimation";
 import { setJwtToken } from "../utils/functions/tools";
-import { useRef } from "react";
 import { axiosSignin } from "../utils/functions/user/axiosSignin";
 
-const SignIn = () => {
+import signInIllu from "../assets/images/sign-in-illu.png";
+
+const useSignin = () => {
     let navigate = useNavigate();
-    const { register, handleSubmit } = useForm();
     const dispatch = useDispatch();
     const spanRef = useRef(null);
+    const containerRef = useRef(null);
 
     //Handles the form's behavior on submit.
     //@Params {type: Object} --> The data provided by the user
@@ -45,6 +47,17 @@ const SignIn = () => {
             );
     };
 
+    return {
+        spanRef,
+        containerRef,
+        onSubmit,
+    };
+};
+
+const SignIn = () => {
+    const { spanRef, containerRef, onSubmit } = useSignin();
+    const { register, handleSubmit } = useForm();
+
     return (
         <section className="signin-section">
             <div className="signin-component start-form">
@@ -72,10 +85,10 @@ const SignIn = () => {
                         />
                         <label htmlFor="mailUser">Mot de passe</label>
                     </div>
-                    <div className="click-anim-container">
+                    <div ref={containerRef} className="click-anim-container">
                         <button
                             onClick={(e) =>
-                                signInClickAnimation(e, ".click-anim-container")
+                                signInClickAnimation(e, containerRef)
                             }
                             onSubmit={handleSubmit(onSubmit)}
                         >

@@ -1,51 +1,116 @@
 import { Link } from "react-router-dom";
-import {
-    handlerRodAnimation,
-    removeRod,
-    showMeRod,
-    handlerUpBgAnimation,
-    handlerDownBgAnimation,
-} from "../../utils/functions/animations";
+import { showMeRod } from "../../utils/functions/animations/navigation/showMeRod";
+import { handlerRodAnimation } from "../../utils/functions/animations/navigation/handleRodAnimation";
+import { removeRod } from "../../utils/functions/animations/navigation/removeRod";
+import { handlerUpBgAnimation } from "../../utils/functions/animations/navigation/handlerUpBgAnimation";
+import { handlerDownBgAnimation } from "../../utils/functions/animations/navigation/handlerDownBgAnimation";
 
-const GuestNavigation = () => {
+const GuestNavigation = ({ animatedBarRef, firstBgRef, scdBgRef }) => {
     return (
         <nav>
             <ul
-                onMouseMove={(e) => handlerRodAnimation(e)}
-                onMouseEnter={(e) => showMeRod(e)}
-                onMouseLeave={(e) => removeRod(e)}
+                onMouseMove={(e) => handlerRodAnimation(e, animatedBarRef)}
+                onMouseEnter={(e) => showMeRod(e, animatedBarRef)}
+                onMouseLeave={(e) => removeRod(e, animatedBarRef)}
             >
                 <li
                     className="firstChild"
-                    onMouseEnter={(e) => handlerUpBgAnimation(e)}
-                    onMouseLeave={(e) => handlerDownBgAnimation(e)}
+                    onMouseEnter={(e) =>
+                        handlerUpBgAnimation(
+                            e,
+                            animatedBarRef,
+                            firstBgRef,
+                            scdBgRef
+                        )
+                    }
+                    onMouseLeave={(e) =>
+                        handlerDownBgAnimation(
+                            e,
+                            animatedBarRef,
+                            firstBgRef,
+                            scdBgRef
+                        )
+                    }
                 >
-                    <span className="animated-bg" id="firstChild"></span>
+                    <span
+                        ref={firstBgRef}
+                        className="animated-bg"
+                        id="firstChild"
+                    ></span>
                     <Link
                         to="/signup"
                         className="firstChild"
-                        onMouseEnter={(e) => handlerUpBgAnimation(e)}
-                        onMouseLeave={(e) => handlerDownBgAnimation(e)}
+                        onMouseEnter={(e) =>
+                            handlerUpBgAnimation(
+                                e,
+                                animatedBarRef,
+                                firstBgRef,
+                                scdBgRef
+                            )
+                        }
+                        onMouseLeave={(e) =>
+                            handlerDownBgAnimation(
+                                e,
+                                animatedBarRef,
+                                firstBgRef,
+                                scdBgRef
+                            )
+                        }
                     >
                         Inscription
                     </Link>
                 </li>
                 <li
                     className="lastChild"
-                    onMouseEnter={(e) => handlerUpBgAnimation(e)}
-                    onMouseLeave={(e) => handlerDownBgAnimation(e)}
+                    onMouseEnter={(e) =>
+                        handlerUpBgAnimation(
+                            e,
+                            animatedBarRef,
+                            firstBgRef,
+                            scdBgRef
+                        )
+                    }
+                    onMouseLeave={(e) =>
+                        handlerDownBgAnimation(
+                            e,
+                            animatedBarRef,
+                            firstBgRef,
+                            scdBgRef
+                        )
+                    }
                 >
-                    <span className="animated-bg" id="lastChild"></span>
+                    <span
+                        ref={scdBgRef}
+                        className="animated-bg"
+                        id="lastChild"
+                    ></span>
                     <Link
                         to="/signin"
                         className="lastChild"
-                        onMouseEnter={(e) => handlerUpBgAnimation(e)}
-                        onMouseLeave={(e) => handlerDownBgAnimation(e)}
+                        onMouseEnter={(e) =>
+                            handlerUpBgAnimation(
+                                e,
+                                animatedBarRef,
+                                firstBgRef,
+                                scdBgRef
+                            )
+                        }
+                        onMouseLeave={(e) =>
+                            handlerDownBgAnimation(
+                                e,
+                                animatedBarRef,
+                                firstBgRef,
+                                scdBgRef
+                            )
+                        }
                     >
                         Connexion
                     </Link>
                 </li>
-                <div className="animation start-home"></div>
+                <div
+                    ref={animatedBarRef}
+                    className="animation start-home"
+                ></div>
             </ul>
         </nav>
     );

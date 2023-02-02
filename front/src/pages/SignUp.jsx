@@ -5,17 +5,17 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserLogged } from "../features/login.slice";
 
-import { signUpClickAnimation } from "../utils/functions/animations";
+import { signUpClickAnimation } from "../utils/functions/animations/onClick/signupClickAnimation";
 import { setJwtToken } from "../utils/functions/tools";
 import { axiosSignup } from "../utils/functions/user/axiosSignup";
 
 import illuSignUp from "../assets/images/sign-up-illu.png";
 
-const SignUp = () => {
+const useSignup = () => {
+    const spanRef = useRef(null);
+    const containerRef = useRef(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { register, handleSubmit } = useForm();
-    const spanRef = useRef(null);
 
     //Handles the form's behavior on submit.
     //@Params {type: Object} --> The data provided by the user
@@ -35,6 +35,17 @@ const SignUp = () => {
                 spanRef.current.textContent = error.message;
             });
     };
+
+    return {
+        spanRef,
+        containerRef,
+        onSubmit,
+    };
+};
+
+const SignUp = () => {
+    const { spanRef, containerRef, onSubmit } = useSignup();
+    const { register, handleSubmit } = useForm();
 
     return (
         <section className="signup-section">
@@ -63,10 +74,10 @@ const SignUp = () => {
                         />
                         <label htmlFor="password">Mot de passe</label>
                     </div>
-                    <div className="click-anim-container">
+                    <div ref={containerRef} className="click-anim-container">
                         <button
                             onClick={(e) =>
-                                signUpClickAnimation(e, ".click-anim-container")
+                                signUpClickAnimation(e, containerRef)
                             }
                         >
                             S'inscrire

@@ -10,18 +10,20 @@ export const postsSlice = createSlice({
             state.posts = payload;
         },
         addPost: (state, { payload }) => {
-            state.posts.push(payload) ;
+            state.posts.push(payload);
         },
         deletePost: (state, { payload }) => {
-            const rightIndex = state.posts.findIndex((post) => post._id === payload)
-            state.posts.splice(rightIndex, 1);    
+            const rightIndex = state.posts.findIndex(
+                (post) => post._id === payload
+            );
+            state.posts.splice(rightIndex, 1);
         },
         changePost: (state, { payload }) => {
-            console.log(payload);
-            // const rightIndex = state.posts.findIndex((post) => post._id === payload.data._id.split("_")[1])
-            const rightIndex = state.posts.findIndex((post) => post._id === payload._id);
+            const rightIndex = state.posts.findIndex(
+                (post) => post._id === payload._id
+            );
             state.posts.splice(rightIndex, 1, payload);
-        }
+        },
     },
 });
 

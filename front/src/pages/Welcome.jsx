@@ -1,8 +1,10 @@
 import { useEffect } from "react";
+
 import { useDispatch } from "react-redux";
 import { setUserLogged } from "../features/login.slice";
 import { getPosts } from "../features/posts.slice";
 import { setProfileData } from "../features/profile.slice";
+
 import illu from "../assets/images/img-socialnetwork-welcom-removebg-preview.png";
 
 const useWelcome = () => {
