@@ -1,24 +1,43 @@
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { getJwtToken } from "../../utils/functions/tools";
-import { setProfileData } from "../../features/profile.slice";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleCompletion } from "../../features/isComplete.slice";
-import { axiosGetPosts } from "../../utils/functions/posts/axiosGetPosts";
-import ProfileHandlerButton from "./ProfileHandlerButton";
 import { useState } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { setProfileData } from "../../features/profile.slice";
+import { toggleCompletion } from "../../features/isComplete.slice";
+
+// import { axiosGetPosts } from "../../utils/functions/posts/axiosGetPosts";
+import { getJwtToken } from "../../utils/functions/tools";
+
+import Dialog from "@mui/material/Dialog";
+import ProfileHandlerButton from "./ProfileHandlerButton";
 import ProfileHandlerCompleted from "./ProfileHandlerCompleted";
 import ProfileHandlerForm from "./ProfileHandlerForm";
+import { axiosPatchProfile } from "../../utils/functions/user/axiosPatchProfile";
 
-const useFormDialog = ({ pseudo, profileFile, setOpen, setWasAlreadyFill }) => {
+const useFormDialog = () => {
+    const [open, setOpen] = useState(false);
+    const [wasAlreadyFill, setWasAlreadyFill] = useState(true);
+
+    return {
+        open,
+        setOpen,
+        wasAlreadyFill,
+        setWasAlreadyFill,
+    };
+};
+
+const useFormDialogData = ({ setOpen, setWasAlreadyFill }) => {
+    const [pseudo, setPseudo] = useState("");
+    const [profileFile, setProfileFile] = useState("");
+    const [profileFileUrl, setProfileFileUrl] = useState("");
     let { userId, token } = getJwtToken();
     const dispatch = useDispatch();
 
+    //Sets the value provided by the user in the localState
+    //@Params {type: Object} --> The params of the onChange event
+    const handleProfileFile = (e) => {
+        setProfileFileUrl(URL.createObjectURL(e.target.files[0]));
+        setProfileFile(e.target.files[0]);
+    };
     const handleProfileData = () => {
         let date = new Date();
         date = Date.now();
@@ -28,6 +47,8 @@ const useFormDialog = ({ pseudo, profileFile, setOpen, setWasAlreadyFill }) => {
         user.append("date", date);
         user.append("file", profileFile);
         user.append("isProfileComplete", true);
+
+        return user;
     };
 
     //Handles the closing of the modal
@@ -37,7 +58,7 @@ const useFormDialog = ({ pseudo, profileFile, setOpen, setWasAlreadyFill }) => {
         setOpen(false);
         if (pseudo !== "" && profileFile !== "") {
             const user = handleProfileData();
-            axiosGetPosts(userId, user, token).then((res) => {
+            axiosPatchProfile(userId, user, token).then((res) => {
                 dispatch(setProfileData(JSON.stringify(res.data.updateData)));
                 dispatch(toggleCompletion(true));
                 setWasAlreadyFill(false);
@@ -46,42 +67,32 @@ const useFormDialog = ({ pseudo, profileFile, setOpen, setWasAlreadyFill }) => {
     };
 
     return {
+        pseudo,
+        profileFileUrl,
+        setPseudo,
+        handleProfileFile,
         handleClose,
     };
 };
 
 const FormDialog = () => {
-    const [open, setOpen] = useState(false);
-    const [pseudo, setPseudo] = useState("");
-    const [profileFile, setProfileFile] = useState("");
-    const [profileFileUrl, setProfileFileUrl] = useState("");
-    const [wasAlreadyFill, setWasAlreadyFill] = useState(true);
-    const { handleClose } = useFormDialog({
+    const { open, wasAlreadyFill, setOpen, setWasAlreadyFill } =
+        useFormDialog();
+    const {
         pseudo,
-        profileFile,
-        setOpen,
-        setWasAlreadyFill,
-    });
+        profileFileUrl,
+        setPseudo,
+        handleProfileFile,
+        handleClose,
+    } = useFormDialogData({ setOpen, setWasAlreadyFill });
     const isComplete = useSelector(
         (state) => state.profileCompletion.isComplete
     );
 
-    //Handles the opening of the modal
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    //Sets the value provided by the user in the localState
-    //@Params {type: Object} --> The params of the onChange event
-    const handleProfileFile = (e) => {
-        setProfileFileUrl(URL.createObjectURL(e.target.files[0]));
-        setProfileFile(e.target.files[0]);
-    };
-
     return (
         <div className="modal">
             <ProfileHandlerButton
-                handleClickOpen={handleClickOpen}
+                handleClickOpen={() => setOpen(true)}
                 isComplete={isComplete}
                 wasAlreadyFill={wasAlreadyFill}
                 profileFileUrl={profileFileUrl}
