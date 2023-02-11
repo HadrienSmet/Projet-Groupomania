@@ -1,0 +1,37 @@
+@media screen and (min-width: 1025px) {
+    .modal {
+        top: 259px;
+        left: 15.5%;
+    }
+}
+@media screen and (max-width: 767px) {
+    .modal {
+        left: 10%;
+        width: 80%;
+        top: 250px;
+    }
+}
+@media screen and (max-width: 350px) {
+    .modal {
+        top: 340px;
+    }
+}
+.modal {
+    position: absolute;
+}
+.css-1a1fmpi-MuiInputBase-root-MuiInput-root:after {
+    border-bottom: 2px solid $primary-color !important;
+}
+.css-1a1fmpi-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled):before {
+    border-bottom: none !important;
+}
+.css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root {
+    color: $primary-color !important;
+    margin-left: 5px;
+}
+.css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+    color: $primary-color !important;
+}
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+    border-radius: 10px;
+}

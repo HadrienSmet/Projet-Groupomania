@@ -1,0 +1,20 @@
+@media screen and (max-width: 767px) {
+    .post__content-container__text {
+        width: 90% !important;
+    }
+}
+.post__content-container {
+    margin-bottom: 40px;
+    @include flexColumnFullCenter;
+    &__text {
+        width: 80%;
+        height: 80px;
+        @include flexFullCenter;
+        p {
+            display: inline-block;
+            color: $clr-2;
+            font-size: 13px;
+            padding: 0 10px;
+        }
+    }
+}

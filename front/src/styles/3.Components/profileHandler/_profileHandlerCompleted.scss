@@ -1,0 +1,8 @@
+.modal__profile-container {
+    padding: 20px;
+    width: 350px;
+    @include flexColumnCenterX;
+    img {
+        height: 200px;
+    }
+}

@@ -1,0 +1,25 @@
+@media screen and (min-width: 1025px) {
+    .post__content-container__image-division {
+        width: 70%;
+        img {
+            height: 350px !important;
+        }
+    }
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .post__content-container__image-division {
+        width: 80%;
+    }
+}
+@media screen and (max-width: 767px) {
+    .post__content-container__image-division {
+        width: 90%;
+    }
+}
+.post__content-container__image-division img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 2px 2px 3px 0px #8583835e;
+}

@@ -1,0 +1,65 @@
+.post-form .text-container {
+    gap: 15px;
+    position: relative;
+    @include flexRowCenterY;
+    label {
+        display: block;
+        height: 30px;
+        width: 30px;
+    }
+    #pen-icon {
+        position: absolute;
+        top: 10px;
+        left: 0;
+
+        display: inline-block;
+        font-size: 30px;
+        color: $clr-1;
+
+        transform: rotateZ(270deg);
+    }
+    textarea {
+        display: inline-block;
+        height: 45px;
+        width: 100%;
+        line-height: 18px;
+        padding-left: 10px;
+
+        border-radius: 12px;
+        outline: none;
+        border: 2px solid $clr-1;
+        background-color: $tertiary-color;
+        color: $clr-1;
+
+        resize: none;
+        overflow: auto;
+        &:focus-visible {
+            outline: none;
+            border: 2px solid $primary-color;
+        }
+        &:focus {
+            height: 200px;
+            border-color: $primary-color;
+            color: $primary-color;
+            ~ span {
+                letter-spacing: 2px;
+                border-left: 2px solid $primary-color;
+                border-right: 2px solid $primary-color;
+                color: $primary-color;
+                transform: scale(0.7) translate(12px, -143px);
+            }
+        }
+    }
+    span {
+        position: absolute;
+        left: 60px;
+        padding: 0 10px;
+
+        text-transform: uppercase;
+        background-color: $tertiary-color;
+        color: $clr-1;
+
+        transition: 0.4s ease-in-out;
+        pointer-events: none;
+    }
+}

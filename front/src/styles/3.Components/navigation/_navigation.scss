@@ -1,27 +1,32 @@
+@media screen and (min-width: 1025px) {
+    nav ul {
+        position: relative;
+        text-align: center;
+        height: 55px;
+        width: 100%;
+        border: 2px solid $tertiary-color;
+        border-radius: 5px;
+        margin-top: 0;
+        margin-bottom: 0;
+        overflow: hidden;
+        transition: 0.1s ease-in-out;
+        z-index: 1;
+        @include flexAroundXCenterY;
+        &:hover {
+            border-color: $primary-color;
+        }
+    }
+}
+@media screen and (max-width: 1024px) {
+    nav ul {
+        display: none;
+    }
+}
+
 nav {
     position: relative;
     width: 400px;
     ul {
-        @media screen and (min-width: 1024px) {
-            position: relative;
-            display: flex;
-            text-align: center;
-            align-items: center;
-            justify-content: space-around;
-            height: 55px;
-            width: 100%;
-            border: 2px solid $tertiary-color;
-            border-radius: 5px;
-            margin-top: 0;
-            margin-bottom: 0;
-            overflow: hidden;
-            transition: 0.1s ease-in-out;
-            z-index: 1;
-            &:hover {
-                border-color: $primary-color;
-            }
-        }
-        display: none;
         > .home-btn {
             width: 75px !important;
         }
@@ -41,17 +46,17 @@ nav {
             width: 115px;
             &:hover {
                 > a {
-                    transform: translateY(-50%,calc(-50% + -2px));
-                    color: $clr-1; 
-                }                 
-            }           
+                    transform: translateY(-50%, calc(-50% + -2px));
+                    color: $clr-1;
+                }
+            }
             a {
                 position: absolute;
                 transition: 0.2s ease-in-out;
                 display: inline-block;
                 color: $tertiary-color;
                 transform: translate(-50%, -50%);
-                z-index: 2;     
+                z-index: 2;
             }
             .animated-bg {
                 position: absolute;
@@ -66,7 +71,7 @@ nav {
                 transition: 0.4s ease-in-out;
                 overflow: hidden;
             }
-        }       
+        }
     }
     .animation {
         position: absolute;

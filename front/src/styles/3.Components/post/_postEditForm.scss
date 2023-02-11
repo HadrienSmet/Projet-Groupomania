@@ -1,0 +1,65 @@
+@media screen and (min-width: 1025px) {
+    .post__content-container__remove-file-btn {
+        transform: translate(35px, -250px);
+    }
+}
+@media screen and (max-width: 1024px) {
+    .post__content-container__text form {
+        width: 100%;
+    }
+    @media screen and (min-width: 768px) {
+        .post__content-container__remove-file-btn {
+            transform: translate(40px, -255px);
+        }
+    }
+}
+@media screen and (max-width: 767px) {
+    .post__content-container__remove-file-btn {
+        transform: translateY(-235px);
+        right: -12%;
+    }
+}
+.post__content-container {
+    &__text form {
+        display: flex;
+        position: relative;
+        top: 20px;
+        left: 10px;
+        width: 90%;
+        height: 100%;
+    }
+    &__remove-file-btn {
+        position: relative;
+        color: $primary-color !important;
+        min-width: 10px !important;
+        padding: 0 !important;
+        font-size: 18px !important;
+    }
+    &__edit {
+        &-area {
+            width: calc(100% - 45px);
+            border: 2px solid $secondary-color;
+            border-radius: 3px;
+            padding: 5px;
+            font-family: "main-fonts";
+            font-size: 13px;
+            resize: none;
+        }
+        &-btn {
+            color: $secondary-color !important;
+            min-width: 10px !important;
+            padding: 0 !important;
+            font-size: 18px !important;
+            margin-left: 10px !important;
+            &:hover {
+                color: $primary-color !important;
+                transform: translate(3px, -3px) scale(1.1);
+            }
+            &-container {
+                position: relative;
+                transform: translateX(-20px);
+                @include flexColumnBetween;
+            }
+        }
+    }
+}

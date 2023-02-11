@@ -1,0 +1,41 @@
+.post {
+    &__modification-container {
+        @include flexBetween;
+    }
+    &__likes-container {
+        display: flex;
+        gap: 5px;
+        &__likes {
+            color: rgb(30, 220, 30);
+            gap: 5px;
+            cursor: pointer;
+            @include flexRowCenterY;
+            p + *:hover {
+                transform: translateY(-3px) scale(1.1);
+            }
+        }
+        &__dislikes {
+            color: $primary-color;
+            gap: 5px;
+            cursor: pointer;
+            @include flexRowCenterY;
+            p + *:hover {
+                transform: translateY(3px) scale(0.9);
+            }
+        }
+    }
+    &__btn-container {
+        display: flex;
+        &__btn {
+            position: relative;
+            background-color: $clr-1 !important;
+            color: $secondary-color !important;
+            font-size: 18px !important;
+            transition: 0.1s ease-in-out !important;
+            &:hover {
+                color: $primary-color !important;
+                transform: translateY(-3px) scale(1.1);
+            }
+        }
+    }
+}

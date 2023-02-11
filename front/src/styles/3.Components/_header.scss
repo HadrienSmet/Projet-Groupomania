@@ -1,25 +1,29 @@
-header {
-    @media screen and (min-width: 1024px) {
+@media screen and (min-width: 1025px) {
+    header {
         width: calc(100% - 30px);
     }
+}
+@media screen and (min-width: 768px) {
+    header img {
+        width: 300px;
+    }
+}
+@media screen and (max-width: 767px) {
+    header img {
+        position: relative;
+        width: 200px;
+        top: 3px;
+    }
+}
+header {
     position: fixed;
-    @include rowCenter;
-    justify-content: space-between;
-    text-align: center;
     padding: 15px;
     background-color: $clr-1;
     z-index: 20;
     width: 100%;
     transition: 0.5s ease-in-out;
+    @include flexBetweenXCenterY;
     img {
-        @media screen and (min-width: 768px) {
-            width: 300px;
-        }
-        @media screen and (max-width: 767px) {
-            position: relative;
-            width: 200px;
-            top: 3px;
-        }
         transition: 0.2s;
     }
     #header-logo.active {
